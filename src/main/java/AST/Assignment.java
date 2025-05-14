@@ -1,5 +1,3 @@
 package AST;
 
-public class Assignment implements Statement{
-    
-}
+public record Assignment(Expression target, Expression value) implements StatementExpression {}

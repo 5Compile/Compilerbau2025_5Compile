@@ -1,4 +1,5 @@
 package AST;
 
-public class MethodCall implements Statement{
-}
+import java.util.List;
+
+public record MethodCall(Expression target, String methodName, List<Expression> arguments) implements StatementExpression {}

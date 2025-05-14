@@ -1,4 +1,5 @@
 package AST;
 
-public class New implements Statement{
-}
+import java.util.List;
+
+public record New(String className, List<Expression> arguments) implements StatementExpression {}
