@@ -18,13 +18,14 @@ Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge (
 
 ## 👨‍💻 Team & Rollen
 
-| Name             | Rolle                  |
-|------------------|------------------------|
-| Tobias Schuhmacher | Projektleitung          |
-| Jonathan Kalmbach | Tester                  |
-| Jonas Braun        | Semantische Analyse     |
-| Sean Reich         | Scanning / Parsing / Grammatik |
-| Bernhard Mebert    | Code-Erzeugung          |
+| Name               | Rolle                          | E-Mail-Alias |
+|--------------------|--------------------------------|--------------|
+| Tobias Schuhmacher | Projektleitung                 | i23036@...   |
+| Jonathan Kalmbach  | Tester                         | i23018@...   |
+| Jonas Braun        | Semantische Analyse            | i23007@...   |
+| Sean Reich         | Scanning / Parsing / Grammatik | i23031@...   |
+| Bernhard Mebert    | Code-Erzeugung                 | i23022@...   |
+
 
 ## 🧩 Projektstruktur
 
