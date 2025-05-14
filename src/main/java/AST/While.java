@@ -1,4 +1,4 @@
 package AST;
 
-public class While implements Statement{
+public class While(Expression condition, Statement body) implements Statement{
 }
