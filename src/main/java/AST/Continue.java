@@ -1,4 +1,4 @@
 package AST;
 
-public class Continue implements Statement{
+public record Continue() implements Statement{
 }

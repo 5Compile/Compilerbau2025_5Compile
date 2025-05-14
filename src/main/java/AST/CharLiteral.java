@@ -1,4 +1,4 @@
 package AST;
 
-public class CharLiteral implements Expression{
+public record CharLiteral(String value) implements Expression{
 }

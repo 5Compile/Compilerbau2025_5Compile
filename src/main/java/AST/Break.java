@@ -1,4 +1,4 @@
 package AST;
 
-public class Break implements Statement{
+public record Break() implements Statement{
 }

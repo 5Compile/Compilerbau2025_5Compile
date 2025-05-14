@@ -1,4 +1,7 @@
 package AST;
 
-public class Block implements Statement{
+import java.util.List;
+
+public record Block(List<Statement> stmts) implements Statement{
+
 }

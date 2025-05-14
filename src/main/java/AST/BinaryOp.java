@@ -1,4 +1,5 @@
 package AST;
 
-public class BinaryOp implements Expression{
+public record BinaryOp(Expression expL, Operator op, Expression expR) implements Expression{
+
 }
