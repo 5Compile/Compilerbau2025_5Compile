@@ -36,10 +36,10 @@ Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge (
 
 ## 📅 Projektphasen
 
-1. **Initialisierung & AST**
+1. **Initialisierung & ASTold**
    - GitHub-Repo, Projektstruktur, erste Grammatik
 2. **Scanning / Parsing**
-   - ANTLR-Grammatik, Lexer & Parser, AST-Erzeugung
+   - ANTLR-Grammatik, Lexer & Parser, ASTold-Erzeugung
 3. **Semantische Analyse**
    - Typprüfung, symbolische Kontextanalyse
 4. **Bytecode-Erzeugung**
