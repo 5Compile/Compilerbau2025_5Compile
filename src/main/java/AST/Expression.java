@@ -1,4 +1,6 @@
 package AST;
 
-public sealed interface Expression permits BinaryOp, BoolLiteral, CharLiteral, FieldOrLocalVarAcc, IntLiteral, MethodCall, New, UnaryOp {
+public sealed interface Expression extends MiniJava permits LocalOrFieldVar, InstVar,
+        Unary, Binary, IntLiteral, BoolLiteral, CharLiteral, NullLiteral,
+        Assign, New, MethodCall {
 }

@@ -1,5 +1,4 @@
 package AST;
 
-public record BoolLiteral(String value) implements Expression{
-
+public record BoolLiteral(boolean value) implements Expression {
 }

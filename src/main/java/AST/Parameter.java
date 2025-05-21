@@ -1,6 +1,4 @@
 package AST;
 
-import java.lang.reflect.Type;
-
-public record Parameter(Type type, String name) implements MiniJava{
+public record Parameter(String type, String name) implements MiniJava {
 }

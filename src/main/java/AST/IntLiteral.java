@@ -1,4 +1,4 @@
 package AST;
 
-public record IntLiteral(int value) implements Expression{
+public record IntLiteral(int value) implements Expression {
 }

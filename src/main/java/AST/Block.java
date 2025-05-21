@@ -2,6 +2,5 @@ package AST;
 
 import java.util.List;
 
-public record Block(List<Statement> stmts) implements Statement{
-
+public record Block(List<Statement> statements) implements MiniJava {
 }

@@ -1,4 +1,4 @@
 package AST;
 
-public record While(Expression condition, Block block) implements Statement{
+public record While(Expression condition, Block body) implements Statement {
 }
