@@ -1,4 +1,6 @@
 package AST;
 
-public class Programm implements MiniJava{
+import java.util.List;
+
+public record Programm(List<Class> classes) implements MiniJava{
 }

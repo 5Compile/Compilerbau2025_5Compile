@@ -1,4 +1,4 @@
 package AST;
 
-public class IfElse implements Statement{
+public record IfElse(Expression cond, Block ifBlock, Block elseBlock) implements Statement{
 }

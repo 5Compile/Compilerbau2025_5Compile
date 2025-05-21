@@ -1,3 +1,3 @@
 package AST;
 
-public record Assignment(Expression target, Expression value) implements StatementExpression {}
+public record Assignment(FieldOrLocalVarAcc target, Expression value) implements StatementExpression {}

@@ -1,4 +1,4 @@
 package AST;
 
-public class UnaryOp implements Expression{
+public record UnaryOp(Expression var, UnaryOp op) implements Expression{
 }

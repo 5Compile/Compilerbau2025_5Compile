@@ -1,4 +1,4 @@
 package AST;
 
-public class Print implements Statement{
+public record Print(Expression toPrint) implements Statement{
 }

@@ -1,4 +1,4 @@
 package AST;
 
-public class For implements Statement{
+public record For(Assignment var, Expression cond, Assignment increment, Block block) implements Statement{
 }

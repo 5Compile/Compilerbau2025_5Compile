@@ -1,4 +1,6 @@
 package AST;
 
-public class Declaration implements Statement{
+import java.lang.reflect.Type;
+
+public record Declaration(Type type, String name) implements Statement{
 }

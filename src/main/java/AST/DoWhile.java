@@ -1,4 +1,4 @@
 package AST;
 
-public class DoWhile implements Statement{
+public record DoWhile(Expression cond, Block block) implements Statement{
 }

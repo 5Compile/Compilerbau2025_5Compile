@@ -2,4 +2,4 @@ package AST;
 
 import java.util.List;
 
-public record MethodCall(Expression target, String methodName, List<Expression> arguments) implements StatementExpression {}
+public record MethodCall(FieldOrLocalVarAcc target, String name, List<Expression> args) implements StatementExpression, Expression {}

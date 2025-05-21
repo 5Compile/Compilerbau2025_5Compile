@@ -1,4 +1,4 @@
 package AST;
 
-public class Return implements Statement{
+public record Return(Expression toReturn) implements Statement{
 }

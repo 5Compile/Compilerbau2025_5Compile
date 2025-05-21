@@ -1,4 +1,4 @@
 package AST;
 
-public interface Expression {
+public sealed interface Expression permits BinaryOp, BoolLiteral, CharLiteral, FieldOrLocalVarAcc, IntLiteral, MethodCall, New, UnaryOp {
 }
