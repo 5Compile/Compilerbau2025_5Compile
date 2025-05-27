@@ -1,4 +1,4 @@
 package TypedAST.TypedClasses;
 
-public class TypedStatement {
+public interface TypedStatement extends TypedMiniJava {
 }

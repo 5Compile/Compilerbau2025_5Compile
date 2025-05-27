@@ -1,4 +1,4 @@
 package TypedAST.TypedClasses;
 
-public class TypedMiniJava {
+public interface TypedMiniJava {
 }
