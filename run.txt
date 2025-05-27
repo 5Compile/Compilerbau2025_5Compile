@@ -1,0 +1,38 @@
+// SimpleClass Test
+
+1. Baue das ausführbare JAR
+mvn clean package
+
+2. Kompiliere eine Testdatei (z.B. SimpleClass.java) mit dem Compiler
+java -jar target/mini-java-compiler.jar test-files/SimpleClass.java output
+
+3. Kompiliere die zugehörige Testklasse (z.B. TestSimpleClass.java) mit javac und dem generierten Bytecode
+javac -d output -cp output test-files/TestSimpleClass.java
+
+4. Führe die Testklasse aus
+java -cp "output;output" TestSimpleClass
+
+5. Zeige die Opcodes (Bytecode) der generierten Klassen an
+javap -c -p output/SimpleClass
+javap -c -p output/TestSimpleClass
+
+Wiederhole Schritt 2-5 für weitere Testdateien nach Bedarf.
+
+
+// EmtpyClass Test
+
+1. Baue das ausführbare JAR
+mvn clean package
+
+2. Kompiliere die Testdatei (EmptyClass.java) mit dem Compiler
+java -jar target/mini-java-compiler.jar test-files/EmptyClass.java output
+
+3. Kompiliere die zugehörige Testklasse (z.B. TestEmptyClass.java) mit javac und dem generierten Bytecode
+javac -d output -cp output test-files/TestEmptyClass.java
+
+4. Führe die Testklasse aus
+java -cp "output;output" TestEmptyClass
+
+5. Zeige die Opcodes (Bytecode) der generierten Klassen an
+javap -c -p output/EmptyClass
+javap -c -p output/TestEmptyClass

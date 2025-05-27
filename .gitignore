@@ -2,7 +2,9 @@
 # Build artifacts
 # ------------------------
 /target/
+output/
 !/mvn/wrapper/maven-wrapper.jar
+dependency-reduced-pom.xml
 
 # ------------------------
 # IntelliJ IDEA
