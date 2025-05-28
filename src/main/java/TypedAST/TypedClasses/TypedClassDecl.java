@@ -32,6 +32,6 @@ public class TypedClassDecl {
         if(untypedClass.mainMethod().isPresent()){
             this.mainMethod = Optional.of(new TypedMainMethodDecl(untypedClass.mainMethod()));
         }
-        //checks ob alles passt hier --> für leere Klasse erstmal übersprungen
+        //checks ob alles passt hier --> für leere Klasse erstmal hier übersprungen
     }
 }
