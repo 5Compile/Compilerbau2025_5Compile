@@ -3,7 +3,6 @@ package compiler.parser;
 import gen.MiniJavaParser;
 import gen.MiniJavaBaseVisitor;
 import compiler.ast.*;
-import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 import java.util.List;
 
