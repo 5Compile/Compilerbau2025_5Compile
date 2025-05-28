@@ -1,19 +1,20 @@
+import AST.ClassDecl;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) throws Exception {
+        List<ClassDecl> classes = new ArrayList<>();
         CharStream input = CharStreams.fromString("public class testClass {}");
         MiniJavaLexer lexer = new MiniJavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
         MiniJavaParser.ClassContext tree = parser.class_(); //Parsen
-        //ExpressionCalculator calc = new ExpressionCalculator();
-        //int ergebnis = calc.calculate(tree.expr()); // initiate walk of tree with listener
+        classes.add(ASTGenerator.generateAST(tree));
         tree.fieldDecl();
-
     }
-
-
 }
