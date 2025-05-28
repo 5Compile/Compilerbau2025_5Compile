@@ -9,7 +9,7 @@ public class ASTGenerator {
     public static AST.ClassDecl generateAST (MiniJavaParser.ClassContext ctx) {
         List<FieldDecl> FieldDecl = new ArrayList<AST.FieldDecl>();
         if(ctx.fieldDecl() != null) {
-
+            FieldDecl = ctx.fieldDecl().stream().map(ASTGenerator::generateFieldDecl).toList();
         }
 
         List<MethodDecl> MethodDecl = new ArrayList<AST.MethodDecl>();
@@ -19,23 +19,27 @@ public class ASTGenerator {
     }
 
     public static AST.FieldDecl generateFieldDecl (MiniJavaParser.FieldDeclContext ctx) {
-        Type type = AST.getType(ctx.type());
-        return new FieldDecl(ctx.name().IDENTIFIER().getText(), getType(ctx.type()));
+        String type = getType(ctx.type());
+        return new FieldDecl(getType(ctx.type()), ctx.name().IDENTIFIER().getText());
     }
 
-    public static Type getType (MiniJavaParser.TypeContext ctx) {
+    public static String getType (MiniJavaParser.TypeContext ctx) {
         if(ctx.INT() != null) {
-            return type.INT;
+            return "INT";
         }
         if(ctx.CHAR() != null) {
-            return type.CHAR;
+            return "CHAR";
         }
         if(ctx.BOOL() != null) {
-            return  type.BOOL;
+            return  "BOOL";
         }
         if(ctx.name() != null) {
-            return type.REFERENCE(ctx.name().getText());
+            return ctx.name().getText();
         }
         return null;
-    }
+    } //TODO Type in den AST --> Wie das mit name
+
+
+
+
 }
