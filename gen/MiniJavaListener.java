@@ -1,4 +1,4 @@
-// Generated from C:/Users/sean0/IdeaProjects/Compilerbau2025_5Compile/src/main/java/MiniJava.g4 by ANTLR 4.13.2
+// Generated from C:/Users/jonas/DHBW Dateien/Semester 4/Compilerbau/Compiler/Projekt/src/main/java/MiniJava.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -26,4 +26,14 @@ public interface MiniJavaListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitName(MiniJavaParser.NameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link MiniJavaParser#fieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterFieldDecl(MiniJavaParser.FieldDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MiniJavaParser#fieldDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitFieldDecl(MiniJavaParser.FieldDeclContext ctx);
 }

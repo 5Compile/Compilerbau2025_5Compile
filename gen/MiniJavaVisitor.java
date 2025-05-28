@@ -1,4 +1,4 @@
-// Generated from C:/Users/sean0/IdeaProjects/Compilerbau2025_5Compile/src/main/java/MiniJava.g4 by ANTLR 4.13.2
+// Generated from C:/Users/jonas/DHBW Dateien/Semester 4/Compilerbau/Compiler/Projekt/src/main/java/MiniJava.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -21,4 +21,10 @@ public interface MiniJavaVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitName(MiniJavaParser.NameContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link MiniJavaParser#fieldDecl}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFieldDecl(MiniJavaParser.FieldDeclContext ctx);
 }
