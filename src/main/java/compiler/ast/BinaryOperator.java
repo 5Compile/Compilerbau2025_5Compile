@@ -1,4 +1,4 @@
-package AST;
+package compiler.ast;
 
 public enum BinaryOperator {
     PLUS, MINUS, TIMES, DIV, MOD,
