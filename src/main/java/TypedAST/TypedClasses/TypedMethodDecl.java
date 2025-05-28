@@ -9,14 +9,14 @@ import java.util.List;
 public class TypedMethodDecl {
     String returnType;
     List<TypedParameter> parameters;
-    Block body;
+    TypedBlock body;
 
     TypedMethodDecl(MethodDecl untypedMethodDecl){
         this.returnType = untypedMethodDecl.returnType();
         for (Parameter parameter: untypedMethodDecl.parameters())
         {
-           // this.parameters.add(new TypedParameter(parameter));
+           this.parameters.add(new TypedParameter(parameter));
         }
-        // this.body = new TypedBlock(untypedMethodDecl.body());
+        this.body = new TypedBlock(untypedMethodDecl.body());
     }
 }
