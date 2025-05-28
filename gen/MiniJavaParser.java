@@ -1,4 +1,4 @@
-// Generated from C:/Users/sean0/Desktop/ParProg/Compilerbau2025_5Compile/src/main/java/MiniJava.g4 by ANTLR 4.13.2
+// Generated from C:/Users/schuh/IdeaProjects/Compilerbau2025_5Compile/src/main/antlr/MiniJava.g4 by ANTLR 4.13.2
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -47,7 +47,7 @@ public class MiniJavaParser extends Parser {
 			null, "'class'", "'{'", "'}'", "'('", "')'", "'static'", "'void'", "'main'", 
 			"'String[] args'", "','", "'return'", "';'", "'todo'", "'for'", "'while'", 
 			"'do'", "'break'", "'continue'", "'printStmt'", "'boolean'", "'char'", 
-			"'Int'", "'Void'", "'public'", "'new'", "'null'", "'this'", "'if'", "'else'", 
+			"'int'", "'Void'", "'public'", "'new'", "'null'", "'this'", "'if'", "'else'", 
 			"'-'", "'+'", "'*'", "'/'", "'%'", "'>'", "'<'", "'>='", "'<='", "'=='", 
 			"'!='", "'&&'", "'||'", "'='", "'+='", "'-='", "'*='", "'%='", "'/='", 
 			"'!'"
