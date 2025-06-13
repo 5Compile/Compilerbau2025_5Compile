@@ -3,7 +3,7 @@ package TypedAST.TypedClasses;
 import AST.Parameter;
 import TypedAST.Type;
 
-public class TypedParameter {
+public class TypedParameter implements TypedMiniJava {
     public String name;
     public Type type;
 
@@ -22,5 +22,10 @@ public class TypedParameter {
             default:
                 throw new RuntimeException("Error on defining Type of Parameter");
         }
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
+
     }
 }

@@ -1,7 +1,8 @@
 package TypedAST.TypedClasses;
 
-import AST.Expression;
-import AST.Statement;
-
 public class TypedAssign implements TypedStatement, TypedExpression {
+    @Override
+    public void accept(TVisitor tVisitor) {
+        tVisitor.visit(this);
+    }
 }

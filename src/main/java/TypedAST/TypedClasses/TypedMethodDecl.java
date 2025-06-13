@@ -1,12 +1,11 @@
 package TypedAST.TypedClasses;
 
-import AST.Block;
 import AST.MethodDecl;
 import AST.Parameter;
 
 import java.util.List;
 
-public class TypedMethodDecl {
+public class TypedMethodDecl implements TypedMiniJava {
     String returnType;
     List<TypedParameter> parameters;
     TypedBlock body;
@@ -18,5 +17,10 @@ public class TypedMethodDecl {
            this.parameters.add(new TypedParameter(parameter));
         }
         this.body = new TypedBlock(untypedMethodDecl.body());
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
+
     }
 }

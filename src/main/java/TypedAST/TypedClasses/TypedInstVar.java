@@ -1,4 +1,8 @@
 package TypedAST.TypedClasses;
 
-public class TypedInstVar {
+public class TypedInstVar implements TypedExpression {
+    @Override
+    public void accept(TVisitor tVisitor) {
+
+    }
 }

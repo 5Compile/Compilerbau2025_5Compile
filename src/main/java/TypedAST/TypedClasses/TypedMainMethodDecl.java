@@ -5,10 +5,15 @@ import AST.MainMethodDecl;
 
 import java.util.Optional;
 
-public class TypedMainMethodDecl {
+public class TypedMainMethodDecl implements TypedMiniJava {
     Block body;
 
     TypedMainMethodDecl(Optional<MainMethodDecl> mainMethod){
+
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
 
     }
 }

@@ -1,4 +1,8 @@
 package TypedAST.TypedClasses;
 
-public class TypedIf {
+public class TypedIf implements TypedStatement {
+    @Override
+    public void accept(TVisitor tVisitor) {
+
+    }
 }

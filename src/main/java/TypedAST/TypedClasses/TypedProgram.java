@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TypedProgram {
+public class TypedProgram implements TypedMiniJava {
     List<TypedClassDecl> classes;
 
     TypedProgram(Program untypedProgram){
@@ -17,8 +17,10 @@ public class TypedProgram {
         {
             this.classes.add(new TypedClassDecl(classDecl));
         }
+        InitialiseTypeCheck();
+    }
+    public void InitialiseTypeCheck(){
         checkForDoubleClasses();
-
     }
 
     public void checkForDoubleClasses(){
@@ -33,5 +35,10 @@ public class TypedProgram {
                 }
             }
         }
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
+
     }
 }

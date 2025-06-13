@@ -2,10 +2,9 @@ package TypedAST.TypedClasses;
 
 import AST.Block;
 import AST.Statement;
-
 import java.util.List;
 
-public class TypedBlock {
+public class TypedBlock implements TypedMiniJava {
     public List<TypedStatement> statements;
 
     TypedBlock(Block untypedBlock){
@@ -13,5 +12,10 @@ public class TypedBlock {
         {
             //statements.add();
         }
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
+
     }
 }

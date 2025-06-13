@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Getter
 @Setter
-public class TypedClassDecl {
+public class TypedClassDecl implements TypedMiniJava {
     private String name;
     private List<TypedFieldDecl> fields;
     private List<TypedMethodDecl> methods;
@@ -33,5 +33,10 @@ public class TypedClassDecl {
             this.mainMethod = Optional.of(new TypedMainMethodDecl(untypedClass.mainMethod()));
         }
         //checks ob alles passt hier --> für leere Klasse erstmal hier übersprungen
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
+
     }
 }

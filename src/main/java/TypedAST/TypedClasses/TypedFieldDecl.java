@@ -3,7 +3,7 @@ package TypedAST.TypedClasses;
 import AST.FieldDecl;
 import TypedAST.Type;
 
-public class TypedFieldDecl {
+public class TypedFieldDecl implements TypedMiniJava {
     public String name;
     public Type type;
 
@@ -22,6 +22,11 @@ public class TypedFieldDecl {
             default:
                 throw new RuntimeException("Error on defining Type of FieldDecl");
         }
+
+    }
+
+    @Override
+    public void accept(TVisitor tVisitor) {
 
     }
 }

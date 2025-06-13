@@ -1,4 +1,8 @@
 package TypedAST.TypedClasses;
 
-public class TypedLocalVarDecl {
+public class TypedLocalVarDecl implements TypedStatement {
+    @Override
+    public void accept(TVisitor tVisitor) {
+
+    }
 }
