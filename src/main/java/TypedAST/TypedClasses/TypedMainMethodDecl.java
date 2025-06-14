@@ -8,7 +8,7 @@ import java.util.Optional;
 public class TypedMainMethodDecl {
     Block body;
 
-    TypedMainMethodDecl(Optional<MainMethodDecl> mainMethod){
+    public TypedMainMethodDecl(Optional<MainMethodDecl> mainMethod){
 
     }
 }

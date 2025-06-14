@@ -8,7 +8,7 @@ import java.util.List;
 public class TypedBlock {
     public List<TypedStatement> statements;
 
-    TypedBlock(Block untypedBlock){
+    public TypedBlock(Block untypedBlock){
         for (Statement stmt: untypedBlock.statements())
         {
             //statements.add();
