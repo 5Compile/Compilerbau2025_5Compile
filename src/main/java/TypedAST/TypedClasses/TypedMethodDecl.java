@@ -21,6 +21,6 @@ public class TypedMethodDecl implements TypedMiniJava {
 
     @Override
     public void accept(TVisitor tVisitor) {
-
+        tVisitor.visit(this);
     }
 }

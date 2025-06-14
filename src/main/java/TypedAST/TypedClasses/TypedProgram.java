@@ -39,6 +39,6 @@ public class TypedProgram implements TypedMiniJava {
 
     @Override
     public void accept(TVisitor tVisitor) {
-
+        tVisitor.visit(this);
     }
 }
