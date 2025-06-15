@@ -11,7 +11,7 @@ public class TypedMethodDecl {
     List<TypedParameter> parameters;
     TypedBlock body;
 
-    TypedMethodDecl(MethodDecl untypedMethodDecl){
+    public TypedMethodDecl(MethodDecl untypedMethodDecl){
         this.returnType = untypedMethodDecl.returnType();
         for (Parameter parameter: untypedMethodDecl.parameters())
         {

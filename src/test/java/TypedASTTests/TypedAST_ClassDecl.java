@@ -1,4 +1,4 @@
-package java.TypedASTTests;
+package TypedASTTests;
 
 import AST.Block;
 import TypedAST.TypedClasses.TypedBlock;
