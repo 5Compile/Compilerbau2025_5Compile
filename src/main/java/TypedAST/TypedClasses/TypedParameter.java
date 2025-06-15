@@ -23,9 +23,4 @@ public class TypedParameter implements TypedMiniJava {
                 throw new RuntimeException("Error on defining Type of Parameter");
         }
     }
-
-    @Override
-    public void accept(TVisitor tVisitor) {
-        tVisitor.visit(this);
-    }
 }

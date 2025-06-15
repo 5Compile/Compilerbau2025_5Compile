@@ -13,9 +13,4 @@ public class TypedBlock implements TypedMiniJava {
             //statements.add();
         }
     }
-
-    @Override
-    public void accept(TVisitor tVisitor) {
-        tVisitor.visit(this);
-    }
 }

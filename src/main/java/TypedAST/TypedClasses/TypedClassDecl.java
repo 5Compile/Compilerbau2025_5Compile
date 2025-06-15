@@ -34,9 +34,4 @@ public class TypedClassDecl implements TypedMiniJava {
         }
         //checks ob alles passt hier --> für leere Klasse erstmal hier übersprungen
     }
-
-    @Override
-    public void accept(TVisitor tVisitor) {
-        tVisitor.visit(this);
-    }
 }

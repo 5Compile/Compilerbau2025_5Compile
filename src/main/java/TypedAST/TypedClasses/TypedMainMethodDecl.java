@@ -11,9 +11,4 @@ public class TypedMainMethodDecl implements TypedMiniJava {
     TypedMainMethodDecl(Optional<MainMethodDecl> mainMethod){
 
     }
-
-    @Override
-    public void accept(TVisitor tVisitor) {
-        tVisitor.visit(this);
-    }
 }

@@ -18,9 +18,4 @@ public class TypedMethodDecl implements TypedMiniJava {
         }
         this.body = new TypedBlock(untypedMethodDecl.body());
     }
-
-    @Override
-    public void accept(TVisitor tVisitor) {
-        tVisitor.visit(this);
-    }
 }
