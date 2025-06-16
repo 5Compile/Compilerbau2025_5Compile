@@ -11,11 +11,7 @@ public class AST_ClassDecl {
                 "ClassDecl",          // Klassenname
                 List.of(),            // leere Felder
                 List.of(),            // leere Methoden
-                Optional.of(
-                        new AST.MainMethodDecl(
-                                new AST.Block(List.of())
-                        )
-                )
+                Optional.empty()
         );
     }
 }
