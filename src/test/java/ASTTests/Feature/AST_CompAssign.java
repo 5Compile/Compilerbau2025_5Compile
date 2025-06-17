@@ -45,9 +45,11 @@ public class AST_CompAssign {
                                         BinaryOperator.SUB,     // a - 1
                                         new IntLiteral(1)
                                 )
+                        ),
+                        /* return a; */
+                        new Return(
+                                new LocalOrFieldVar("a")
                         )
-                        /* kein return‐Statement – entspricht der
-                           originalen (falschen) Java-Signatur             */
                 ))
         );
 
