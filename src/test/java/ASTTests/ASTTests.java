@@ -15,97 +15,97 @@ public class ASTTests {
 
      @Test
     public void testBreak() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Break.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Break.java"));
         assertEquals(AST_Break.get(), resultAst);
     }
 
     @Test
     public void testClassDecl() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/ClassDecl.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/ClassDecl.java"));
         assertEquals(AST_ClassDecl.get(), resultAst);
     }
 
     @Test
     public void testComment() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Comment.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Comment.java"));
         assertEquals(AST_Comment.get(), resultAst);
     }
 
     @Test
     public void testCompAssign() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/CompAssign.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/CompAssign.java"));
         assertEquals(AST_CompAssign.get(), resultAst);
     }
 
     @Test
     public void testConstructor() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Constructor.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Constructor.java"));
         assertEquals(AST_Constructor.get(), resultAst);
     }
 
     @Test
     public void testDataTypes() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/DataTypes.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/DataTypes.java"));
         assertEquals(AST_DataTypes.get(), resultAst);
     }
 
     @Test
     public void testFieldDecl() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/FieldDecl.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/FieldDecl.java"));
         assertEquals(AST_FieldDecl.get(), resultAst);
     }
 
     @Test
     public void testFor() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/For.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/For.java"));
         assertEquals(AST_For.get(), resultAst);
     }
 
     @Test
     public void testIf() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/If.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/If.java"));
         assertEquals(AST_If.get(), resultAst);
     }
 
     @Test
     public void testIncDec() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/IncDec.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/IncDec.java"));
         assertEquals(AST_IncDec.get(), resultAst);
     }
 
     @Test
     public void testExprLogic() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/ExprLogic.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/ExprLogic.java"));
         assertEquals(AST_ExprLogic.get(), resultAst);
     }
 
     @Test
     public void testMain() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Main.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Main.java"));
         assertEquals(AST_Main.get(), resultAst);
     }
 
     @Test
     public void testMethod() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Method.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Method.java"));
         assertEquals(AST_Method.get(), resultAst);
     }
 
     @Test
     public void testMethodCall() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/MethodCall.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/MethodCall.java"));
         assertEquals(AST_MethodCall.get(), resultAst);
     }
 
     @Test
     public void testOperators() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/Operators.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/Operators.java"));
         assertEquals(AST_Operators.get(), resultAst);
     }
 
     @Test
     public void testMethodReturn() {
-        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/java/testing_Files/MethodReturn.java"));
+        Program resultAst = Compiler.generateASTFromFiles(List.of("src/test/testing_Files/MethodReturn.java"));
         assertEquals(AST_MethodReturn.get(), resultAst);
     }
 
