@@ -28,8 +28,7 @@ public class TypedAST_ClassDecl {
                                 ),
                                 Type.REFERENCE("ClassDecl")
                         )
-                ),
-                null // falls dein TypedProgram noch was 2. braucht (z. B. globale Funktionen)
+                )
         );
     }
 }
