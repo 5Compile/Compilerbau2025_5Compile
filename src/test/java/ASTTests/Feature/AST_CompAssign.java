@@ -1,0 +1,65 @@
+package ASTTests.Feature;
+
+import AST.*;
+
+import java.util.List;
+import java.util.Optional;
+
+public class AST_CompAssign {
+
+    public static Program get() {
+
+        /* ────────────── increase(int a) ────────────── */
+        MethodDecl increase = new MethodDecl(
+                "int",                        // Rückgabetyp
+                "increase",
+                List.of( new Parameter(Type.INT, "a") ),
+                new Block(List.of(
+                        /* a = a + 1;   (compound  +=  aufgelöst) */
+                        new Assign(
+                                new LocalOrFieldVar("a"),
+                                new Binary(
+                                        new LocalOrFieldVar("a"),
+                                        BinaryOperator.ADD,     // a + 1
+                                        new IntLiteral(1)
+                                )
+                        ),
+                        /* return a; */
+                        new Return(
+                                new LocalOrFieldVar("a")
+                        )
+                ))
+        );
+
+        /* ────────────── decrease(int a) ────────────── */
+        MethodDecl decrease = new MethodDecl(
+                "int",
+                "decrease",
+                List.of( new Parameter(Type.INT, "a") ),
+                new Block(List.of(
+                        /* a = a - 1;   (compound  -=  aufgelöst) */
+                        new Assign(
+                                new LocalOrFieldVar("a"),
+                                new Binary(
+                                        new LocalOrFieldVar("a"),
+                                        BinaryOperator.SUB,     // a - 1
+                                        new IntLiteral(1)
+                                )
+                        )
+                        /* kein return‐Statement – entspricht der
+                           originalen (falschen) Java-Signatur             */
+                ))
+        );
+
+        /* ────────────── Klasse zusammensetzen ────────────── */
+        ClassDecl clazz = new ClassDecl(
+                "CompAssign",
+                List.of(),                         // keine Felder
+                List.of(increase, decrease),       // beide Methoden
+                Optional.empty()                   // keine main-Methode
+        );
+
+        /* ────────────── Program-Root ────────────── */
+        return new Program(List.of(clazz));
+    }
+}
