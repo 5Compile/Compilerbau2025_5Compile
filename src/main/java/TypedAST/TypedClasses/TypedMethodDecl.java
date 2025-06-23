@@ -1,21 +1,22 @@
 package TypedAST.TypedClasses;
 
+import AST.Block;
 import AST.MethodDecl;
 import AST.Parameter;
+import TypedAST.Type;
 
 import java.util.List;
 
 public class TypedMethodDecl implements TypedMiniJava {
-    String returnType;
+    String name;
     List<TypedParameter> parameters;
     TypedBlock body;
+    Type type;
 
-    TypedMethodDecl(MethodDecl untypedMethodDecl){
-        this.returnType = untypedMethodDecl.returnType();
-        for (Parameter parameter: untypedMethodDecl.parameters())
-        {
-           this.parameters.add(new TypedParameter(parameter));
-        }
-        this.body = new TypedBlock(untypedMethodDecl.body());
+    TypedMethodDecl(String name, List<TypedParameter> typedParameterList, TypedBlock typedBody, Type type){
+        this.name = name;
+        this.parameters = typedParameterList;
+        this.body = typedBody;
+        this.type = type;
     }
 }

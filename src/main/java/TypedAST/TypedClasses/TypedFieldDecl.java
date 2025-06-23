@@ -7,21 +7,8 @@ public class TypedFieldDecl implements TypedMiniJava {
     public String name;
     public Type type;
 
-    TypedFieldDecl(FieldDecl untypedFieldDecl) {
-        this.name = untypedFieldDecl.name();
-        switch (untypedFieldDecl.type()){
-            case "int":
-                type = Type.INT;
-                break;
-            case "boolean":
-                type = Type.BOOL;
-                break;
-            case "char":
-                type = Type.CHAR;
-                break;
-            default:
-                throw new RuntimeException("Error on defining Type of FieldDecl");
-        }
-
+    TypedFieldDecl(String name, Type type){
+        this.name = name;
+        this.type = type;
     }
 }

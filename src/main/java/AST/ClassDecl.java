@@ -10,7 +10,7 @@ public record ClassDecl(String name,
                         List<MethodDecl> methods,
                         Optional<MainMethodDecl> mainMethod) implements MiniJava {
     @Override
-    public <T> T toTyped(Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }
 }

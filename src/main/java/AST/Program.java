@@ -6,7 +6,7 @@ import java.util.List;
 
 public record Program(List<ClassDecl> classes) implements MiniJava {
     @Override
-    public <T> T toTyped(Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }
 }
