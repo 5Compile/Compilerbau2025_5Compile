@@ -4,6 +4,11 @@ import AST.Expression;
 import TypedAST.Type;
 
 public class TypedPrintStmt implements TypedStatement {
-    Expression expression;
+    TypedExpression expression;
     Type type;
+
+    TypedPrintStmt(TypedExpression expression, Type type){
+        this.expression = expression;
+        this.type = type;
+    }
 }

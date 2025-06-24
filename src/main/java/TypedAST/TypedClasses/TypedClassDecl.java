@@ -19,4 +19,11 @@ public class TypedClassDecl implements TypedMiniJava {
     private Optional<TypedMainMethodDecl> mainMethod;
     private Type type;
 
+    TypedClassDecl(String name, List<TypedFieldDecl> fields, List<TypedMethodDecl> methods, Optional<TypedMainMethodDecl> mainMethod, Type type){
+        this.name = name;
+        this.fields = fields;
+        this.methods = methods;
+        this.mainMethod = mainMethod;
+        this.type = type;
+    }
 }

@@ -7,5 +7,9 @@ import TypedAST.Type;
 import java.util.Optional;
 
 public class TypedMainMethodDecl implements TypedMiniJava {
-    Block body;
+    TypedBlock body;
+
+    TypedMainMethodDecl(TypedBlock body){
+        this.body = body;
+    }
 }

@@ -13,4 +13,9 @@ import java.util.List;
 public class TypedProgram implements TypedMiniJava {
     List<TypedClassDecl> classes;
     Type type;
+
+    TypedProgram(List<TypedClassDecl> classes, Type type){
+        this.classes = classes;
+        this.type = type;
+    }
 }

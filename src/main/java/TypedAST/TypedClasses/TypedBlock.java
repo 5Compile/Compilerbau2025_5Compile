@@ -9,4 +9,9 @@ import java.util.List;
 public class TypedBlock implements TypedMiniJava {
     public List<TypedStatement> statements;
     Type type;
+
+    TypedBlock(List<TypedStatement> statements, Type type){
+        this.statements = statements;
+        this.type = type;
+    }
 }

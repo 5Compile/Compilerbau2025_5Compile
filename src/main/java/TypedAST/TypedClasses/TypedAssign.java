@@ -4,7 +4,14 @@ import AST.Expression;
 import TypedAST.Type;
 
 public class TypedAssign implements TypedStatement, TypedExpression {
-    Expression target;
-    Expression value;
+    TypedExpression target;
+    TypedExpression value;
     Type type;
+
+    TypedAssign(TypedExpression target, TypedExpression value, Type type){
+        this.target = target;
+        this.value = value;
+        this.type = type;
+
+    }
 }

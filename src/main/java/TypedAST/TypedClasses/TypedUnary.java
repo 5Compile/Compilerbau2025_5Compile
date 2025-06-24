@@ -5,7 +5,13 @@ import AST.UnaryOperator;
 import TypedAST.Type;
 
 public class TypedUnary implements TypedExpression {
-    Expression operand;
+    TypedExpression operand;
     UnaryOperator operator;
     Type type;
+
+    TypedUnary(TypedExpression operand, UnaryOperator operator, Type type){
+        this.operand = operand;
+        this.operator = operator;
+        this.type = type;
+    }
 }

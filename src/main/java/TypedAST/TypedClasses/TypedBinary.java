@@ -5,8 +5,15 @@ import AST.Expression;
 import TypedAST.Type;
 
 public class TypedBinary implements TypedExpression {
-    AST.Expression left;
-    Expression right;
+    TypedExpression left;
+    TypedExpression right;
     BinaryOperator operator;
     Type type;
+
+    TypedBinary(TypedExpression left, TypedExpression right, BinaryOperator operator, Type type){
+        this.left = left;
+        this.right = right;
+        this.operator = operator;
+        this.type = type;
+    }
 }

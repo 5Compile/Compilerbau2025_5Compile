@@ -4,7 +4,13 @@ import AST.Expression;
 import TypedAST.Type;
 
 public class TypedWhile implements TypedStatement {
-    Expression condition;
+    TypedExpression condition;
     TypedBlock body;
     Type type;
+
+    TypedWhile(TypedExpression condition, TypedBlock body, Type type){
+        this.condition = condition;
+        this.body = body;
+        this.type = type;
+    }
 }
