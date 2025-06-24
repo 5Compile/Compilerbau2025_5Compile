@@ -1,9 +1,21 @@
 package TypedAST.TypedClasses;
 
-import AST.Parameter;
 import TypedAST.Type;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TypedParameter implements TypedMiniJava {
-    public String name;
-    public Type type;
+    private String name;
+    private Type type;
+    
+    public TypedParameter() {
+        // Default constructor for TypeCheckVisitor
+    }
+    
+    public TypedParameter(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
 }

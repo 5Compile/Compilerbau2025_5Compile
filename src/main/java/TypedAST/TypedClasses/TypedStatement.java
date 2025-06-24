@@ -1,4 +1,6 @@
 package TypedAST.TypedClasses;
 
-public interface TypedStatement extends TypedMiniJava {
+import TypedAST.CodeGen;
+
+public interface TypedStatement extends TypedMiniJava, CodeGen {
 }

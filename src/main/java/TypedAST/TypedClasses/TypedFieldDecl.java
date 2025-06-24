@@ -1,13 +1,16 @@
 package TypedAST.TypedClasses;
 
-import AST.FieldDecl;
 import TypedAST.Type;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class TypedFieldDecl implements TypedMiniJava {
-    public String name;
-    public Type type;
+    private String name;
+    private Type type;
 
-    TypedFieldDecl(String name, Type type){
+    public TypedFieldDecl(String name, Type type){
         this.name = name;
         this.type = type;
     }
