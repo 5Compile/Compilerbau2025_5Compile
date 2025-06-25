@@ -1,4 +1,4 @@
 package AST;
 
-public record LocalOrFieldVar(String name) implements Expression {
+public record LocalOrFieldVar(Boolean field, Expression recursiveOwnerChain, String name) implements Expression {
 }

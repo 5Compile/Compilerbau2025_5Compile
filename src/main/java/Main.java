@@ -9,7 +9,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws Exception {
         List<ClassDecl> classes = new ArrayList<>();
-        CharStream input = CharStreams.fromString("public class testClass {int testdecl;}");
+        CharStream input = CharStreams.fromString("public class testClass {int testdecl2;}");
         MiniJavaLexer lexer = new MiniJavaLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);

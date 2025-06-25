@@ -2,6 +2,6 @@ package AST;
 
 import java.util.List;
 
-public record MethodCall(Expression target, String methodName,
+public record MethodCall(LocalOrFieldVar target, String methodName,
                          List<Expression> arguments) implements Statement, Expression {
 }

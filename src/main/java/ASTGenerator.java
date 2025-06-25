@@ -1,5 +1,8 @@
 import AST.FieldDecl;
 import AST.MethodDecl;
+import AST.Block;
+import AST.Parameter;
+
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -11,17 +14,16 @@ public class ASTGenerator {
         if(ctx.fieldDecl() != null) {
             FieldDecl = ctx.fieldDecl().stream().map(ASTGenerator::generateFieldDecl).toList();
         }
+        List<MethodDecl> MethodDecl = new ArrayList<>();
 
-        List<MethodDecl> MethodDecl = new ArrayList<AST.MethodDecl>();
-
-        return new AST.ClassDecl(ctx.name().IDENTIFIER().getText(), FieldDecl, MethodDecl, null);
-
+        return new AST.ClassDecl(ctx.name().IDENTIFIER().getText(), FieldDecl, MethodDecl,null, null);
     }
 
     public static AST.FieldDecl generateFieldDecl (MiniJavaParser.FieldDeclContext ctx) {
         String type = getType(ctx.type());
         return new FieldDecl(getType(ctx.type()), ctx.name().IDENTIFIER().getText());
     }
+
 
     public static String getType (MiniJavaParser.TypeContext ctx) {
         if(ctx.INT() != null) {
