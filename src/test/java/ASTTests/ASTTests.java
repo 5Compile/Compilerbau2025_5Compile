@@ -1,9 +1,10 @@
-package java.ASTTests;
+package ASTTests;
 
+import ASTTests.Feature.*;
 import AST.Program;
 import org.junit.Test;
 
-import java.ASTTests.Feature.*;
+import ASTTests.Feature.*;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;

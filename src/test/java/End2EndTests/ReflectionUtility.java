@@ -1,6 +1,5 @@
-package E2ETests;
+package End2EndTests;
 
-import de.maishai.Compiler;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 // DANACH WERDEN MIT JAVA-REFLECTION-AUFRUFEN INFOS ABGEPRÜFT
 
 // SPÄTER NOCH ANPASSEN !!!!
-public class ReflectionsTestUtil {
+public class ReflectionUtility {
 
     /**
      * Class object representing the class that was compiled and can be analysed using reflection
@@ -29,7 +28,7 @@ public class ReflectionsTestUtil {
     /**
      * Logger to log exceptions
      */
-    private static final Logger LOGGER = Logger.getLogger(ReflectionsTestUtil.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ReflectionUtility.class.getName());
 
     /**
      * Constructor to compile the source files, load the Class<?>-Object and create an instance of the class
@@ -37,7 +36,7 @@ public class ReflectionsTestUtil {
      * @param className Name of the class to be loaded into the Class<?>-Object and create an instance of
      * @throws Exception If any exception occurs
      */
-    public ReflectionsTestUtil(String sourceFilePath, String className) throws Exception {
+    public ReflectionUtility(String sourceFilePath, String className) throws Exception {
         // Generate bytecode from source file
         byte[] resultBytecode = Compiler.generateByteCodeArrayFromFiles(List.of(sourceFilePath)).get(0);
 

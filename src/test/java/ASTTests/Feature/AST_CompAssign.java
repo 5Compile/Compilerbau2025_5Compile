@@ -1,6 +1,7 @@
 package ASTTests.Feature;
 
 import AST.*;
+import TypedAST.Type;  // Add this import
 
 import java.util.List;
 import java.util.Optional;
@@ -13,16 +14,17 @@ public class AST_CompAssign {
         MethodDecl increase = new MethodDecl(
                 "int",                        // Rückgabetyp
                 "increase",
-                List.of( new Parameter(Type.INT, "a") ),
+                List.of( new Parameter(Type.INT.toString(), "a") ),
                 new Block(List.of(
                         /* a = a + 1;   (compound  +=  aufgelöst) */
                         new Assign(
                                 new LocalOrFieldVar("a"),
                                 new Binary(
-                                        new LocalOrFieldVar("a"),
-                                        BinaryOperator.ADD,     // a + 1
-                                        new IntLiteral(1)
+                                        new LocalOrFieldVar("a"),       // left (Expression)
+                                        new IntLiteral(1),             // right (Expression)
+                                        BinaryOperator.PLUS           // operator
                                 )
+
                         ),
                         /* return a; */
                         new Return(
@@ -35,15 +37,15 @@ public class AST_CompAssign {
         MethodDecl decrease = new MethodDecl(
                 "int",
                 "decrease",
-                List.of( new Parameter(Type.INT, "a") ),
+                List.of( new Parameter(Type.INT.toString(), "a") ),
                 new Block(List.of(
                         /* a = a - 1;   (compound  -=  aufgelöst) */
                         new Assign(
                                 new LocalOrFieldVar("a"),
                                 new Binary(
                                         new LocalOrFieldVar("a"),
-                                        BinaryOperator.SUB,     // a - 1
-                                        new IntLiteral(1)
+                                        new IntLiteral(1),
+                                        BinaryOperator.MINUS     // a - 1
                                 )
                         ),
                         /* return a; */
