@@ -19,4 +19,9 @@ public class TypedMethodDecl implements TypedMiniJava {
         this.body = typedBody;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

@@ -12,6 +12,10 @@ public class TypedAssign implements TypedStatement, TypedExpression {
         this.target = target;
         this.value = value;
         this.type = type;
+    }
 
+    @Override
+    public Type getType() {
+        return type;
     }
 }

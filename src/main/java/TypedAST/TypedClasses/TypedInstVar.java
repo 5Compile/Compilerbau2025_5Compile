@@ -13,4 +13,9 @@ public class TypedInstVar implements TypedExpression {
         this.fieldName = fieldName;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

@@ -17,4 +17,9 @@ public class TypedMethodCall implements TypedStatement, TypedExpression {
         this.arguments = arguments;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

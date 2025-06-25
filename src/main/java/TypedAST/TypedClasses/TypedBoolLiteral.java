@@ -5,10 +5,14 @@ import TypedAST.Type;
 
 public class TypedBoolLiteral implements TypedExpression {
     boolean value;
-    Type type;
+    Type type = Type.BOOL;
 
-    TypedBoolLiteral(boolean value, Type type){
+    TypedBoolLiteral(boolean value){
         this.value = value;
-        this.type = type;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

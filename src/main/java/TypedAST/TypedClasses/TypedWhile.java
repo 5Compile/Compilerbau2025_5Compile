@@ -13,4 +13,9 @@ public class TypedWhile implements TypedStatement {
         this.body = body;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

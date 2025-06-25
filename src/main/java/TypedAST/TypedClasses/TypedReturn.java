@@ -11,4 +11,9 @@ public class TypedReturn implements TypedStatement {
         this.value = value;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

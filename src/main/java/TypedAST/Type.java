@@ -4,5 +4,6 @@ public enum Type {
     INT,
     BOOL,
     CHAR,
-    VOID
+    VOID,
+    REFERENCE
 }

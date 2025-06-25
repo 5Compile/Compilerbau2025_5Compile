@@ -8,14 +8,16 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
 public class TypedProgram implements TypedMiniJava {
     List<TypedClassDecl> classes;
-    Type type;
+    Type type = Type.VOID;
 
-    TypedProgram(List<TypedClassDecl> classes, Type type){
+    TypedProgram(List<TypedClassDecl> classes){
         this.classes = classes;
-        this.type = type;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

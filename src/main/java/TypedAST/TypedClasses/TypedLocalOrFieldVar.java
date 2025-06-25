@@ -12,4 +12,9 @@ public class TypedLocalOrFieldVar implements TypedExpression {
         this.isLocal = isLocal;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

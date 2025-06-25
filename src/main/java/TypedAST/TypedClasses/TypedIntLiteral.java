@@ -4,10 +4,14 @@ import TypedAST.Type;
 
 public class TypedIntLiteral implements TypedExpression {
     int value;
-    Type type;
+    Type type = Type.INT;
 
-    TypedIntLiteral(int value, Type type){
+    TypedIntLiteral(int value){
         this.value = value;
-        this.type = type;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

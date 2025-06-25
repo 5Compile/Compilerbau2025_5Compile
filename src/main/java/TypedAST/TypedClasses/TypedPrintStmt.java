@@ -5,10 +5,14 @@ import TypedAST.Type;
 
 public class TypedPrintStmt implements TypedStatement {
     TypedExpression expression;
-    Type type;
+    Type type = Type.VOID;
 
-    TypedPrintStmt(TypedExpression expression, Type type){
+    TypedPrintStmt(TypedExpression expression){
         this.expression = expression;
-        this.type = type;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

@@ -14,4 +14,9 @@ public class TypedBlock implements TypedMiniJava {
         this.statements = statements;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

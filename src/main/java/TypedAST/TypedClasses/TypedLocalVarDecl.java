@@ -10,4 +10,9 @@ public class TypedLocalVarDecl implements TypedStatement {
         this.name = name;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

@@ -14,4 +14,9 @@ public class TypedUnary implements TypedExpression {
         this.operator = operator;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

@@ -8,8 +8,14 @@ import java.util.Optional;
 
 public class TypedMainMethodDecl implements TypedMiniJava {
     TypedBlock body;
+    Type type;
 
     TypedMainMethodDecl(TypedBlock body){
         this.body = body;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

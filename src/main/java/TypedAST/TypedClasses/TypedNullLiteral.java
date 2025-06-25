@@ -3,9 +3,14 @@ package TypedAST.TypedClasses;
 import TypedAST.Type;
 
 public class TypedNullLiteral implements TypedExpression {
-    Type type;
+    Type type = Type.VOID;
 
-    TypedNullLiteral(Type type){
-        this.type = type;
+    TypedNullLiteral(){
+
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }

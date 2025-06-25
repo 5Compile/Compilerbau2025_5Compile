@@ -10,12 +10,16 @@ public class TypedIf implements TypedStatement {
     TypedExpression condition;
     TypedBlock thenBranch;
     Optional<TypedBlock> elseBranch;
-    Type type;
+    Type type = Type.VOID;
 
-    TypedIf(TypedExpression condition, TypedBlock thenBranch, Optional<TypedBlock> elseBranch, Type type){
+    TypedIf(TypedExpression condition, TypedBlock thenBranch, Optional<TypedBlock> elseBranch){
         this.condition = condition;
         this.thenBranch = thenBranch;
         this.elseBranch = elseBranch;
-        this.type = type;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
     }
 }
