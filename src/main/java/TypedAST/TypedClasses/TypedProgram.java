@@ -1,7 +1,6 @@
 package TypedAST.TypedClasses;
 
-import AST.ClassDecl;
-import AST.Program;
+import TypedAST.Type;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,29 +8,17 @@ import java.util.List;
 
 @Getter
 @Setter
-public class TypedProgram {
-    List<TypedClassDecl> classes;
-
-    TypedProgram(Program untypedProgram){
-        for (ClassDecl classDecl: untypedProgram.classes())
-        {
-            this.classes.add(new TypedClassDecl(classDecl));
-        }
-        checkForDoubleClasses();
-
+public class TypedProgram implements TypedMiniJava {
+    private List<TypedClassDecl> classes;
+    private Type type;
+    
+    public TypedProgram() {
+        // Default constructor for TypeCheckVisitor
+        this.type = Type.VOID;
     }
-
-    public void checkForDoubleClasses(){
-
-        for (TypedClassDecl currentClass : classes)
-        {
-            for(TypedClassDecl compareClass  : classes){
-                if(currentClass == compareClass){
-                    return;
-                }else if(currentClass.getName().equals(compareClass.getName())){
-                    throw new RuntimeException("Class Name " + currentClass.getName() + " is declared multiple times!");
-                }
-            }
-        }
+    
+    public TypedProgram(List<TypedClassDecl> classes) {
+        this.classes = classes;
+        this.type = Type.VOID;
     }
 }

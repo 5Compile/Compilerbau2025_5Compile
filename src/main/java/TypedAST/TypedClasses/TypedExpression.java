@@ -1,4 +1,8 @@
 package TypedAST.TypedClasses;
 
-public interface TypedExpression extends TypedMiniJava {
+import TypedAST.CodeGen;
+import TypedAST.Type;
+
+public interface TypedExpression extends TypedMiniJava, CodeGen {
+    Type getType();
 }

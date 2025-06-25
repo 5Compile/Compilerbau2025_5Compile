@@ -1,27 +1,17 @@
 package TypedAST.TypedClasses;
 
-import AST.FieldDecl;
 import TypedAST.Type;
+import lombok.Getter;
+import lombok.Setter;
 
-public class TypedFieldDecl {
-    public String name;
-    public Type type;
+@Getter
+@Setter
+public class TypedFieldDecl implements TypedMiniJava {
+    private String name;
+    private Type type;
 
-    TypedFieldDecl(FieldDecl untypedFieldDecl) {
-        this.name = untypedFieldDecl.name();
-        switch (untypedFieldDecl.type()){
-            case "int":
-                type = Type.INT;
-                break;
-            case "boolean":
-                type = Type.BOOL;
-                break;
-            case "char":
-                type = Type.CHAR;
-                break;
-            default:
-                throw new RuntimeException("Error on defining Type of FieldDecl");
-        }
-
+    public TypedFieldDecl(String name, Type type){
+        this.name = name;
+        this.type = type;
     }
 }
