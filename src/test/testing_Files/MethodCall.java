@@ -1,5 +1,5 @@
-public class MethodCall{
-    public int method(){return true;}
+public class MethodCall {
+    public int method() { return 1; }
 
-    public methodCall(){return method();}
+    public methodCall() { return method(); }
 }

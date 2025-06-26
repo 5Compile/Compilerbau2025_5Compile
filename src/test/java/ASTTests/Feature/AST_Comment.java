@@ -5,7 +5,6 @@ import AST.*;
 import java.util.List;
 import java.util.Optional;
 
-package ASTTests.Feature;
 
 import AST.*;
 
