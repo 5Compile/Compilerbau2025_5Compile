@@ -16,6 +16,8 @@ import parser.MiniJavaLexer;
 
 public class ASTGenerator {
 
+    private static List<String> Messages = new ArrayList<>();
+
     public static ClassDecl generateAST(MiniJavaParser.ClassContext ctx) {
         String className = ctx.name().IDENTIFIER().getText();
 
@@ -54,7 +56,7 @@ public class ASTGenerator {
         Optional<MainMethodDecl> mainMethod = Optional.empty();
         if (ctx.mainmethodDecl() != null && !ctx.mainmethodDecl().isEmpty()) {
             if (ctx.mainmethodDecl().size() > 1) {
-                System.out.println("Warnung: Mehrere Main-Methoden gefunden – es wird nur die erste verwendet.");
+                Messages.add("Parser: Warning: Multiple main methods found – only the first one will be used.");
             }
             mainMethod = Optional.of(generateMainMethodDecl(ctx.mainmethodDecl(0)));
         }
@@ -67,7 +69,7 @@ public class ASTGenerator {
             try {
                 sources.add(Files.readString(Paths.get(path)));
             } catch (IOException e) {
-                System.err.println("Fehler beim Lesen: " + path);
+                Messages.add("Error while reading file: " + path);
                 return null;
             }
         }
@@ -329,5 +331,9 @@ public class ASTGenerator {
     public static String getType(MiniJavaParser.ReturntypeContext ctx) {
         if (ctx.VOID() != null) return "void";
         return getType(ctx.type());
+    }
+
+    public static List<String> getMessages() {
+        return Messages;
     }
 }
