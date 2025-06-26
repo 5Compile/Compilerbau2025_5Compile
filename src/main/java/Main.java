@@ -1,5 +1,8 @@
 import AST.ASTGenerator;
 import AST.ClassDecl;
+import TypedAST.ClassContext;
+import TypedAST.TypedClasses.TypeCheckVisitor;
+import TypedAST.TypedClasses.TypedClassDecl;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -7,13 +10,16 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import parser.MiniJavaParser;
 import parser.MiniJavaLexer;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        String input1 = "public class ComplexTest { int x; boolean flag; public ComplexTest() { this.x = 10; flag = true; } public void compute(int a, int b) { int result; result = a + b * 2; if (result > 10) { print(result); } else { result = result - 1; } while (a < b) { a = a + 1; } do { result = result - 1; } while (result > 0); for (int i = 0; i < 5; i = i + 1) { print(i); } a++; b++; new ComplexTest(); someMethod(); return 123; } public static void main(String[] args) { print(42); } }";
+        String input1 = "public class Berechnung {}";
 
 
         List<ClassDecl> classes = new ArrayList<>();
@@ -22,6 +28,19 @@ public class Main {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         MiniJavaParser parser = new MiniJavaParser(tokens);
         MiniJavaParser.ClassContext tree = parser.class_(); //Parsen
-        classes.add(ASTGenerator.generateAST(tree));
+        ClassDecl decl = ASTGenerator.generateAST(tree);
+        System.out.println("AST erzeugt!");
+
+        TypeCheckVisitor visitor = new TypeCheckVisitor();
+        TypedClassDecl typed = visitor.visit(decl);
+        System.out.println("TypedAST erzeugt für: " + typed.getClass().getSimpleName());
+
+        typed.setName("Berechnung");
+        typed.setMainMethod(Optional.empty());
+
+        byte[] bytecode = typed.codeGen(); // erzeugt mit ASM
+        Files.write(Path.of("Berechnung.class"), bytecode);
+        System.out.println("✅ Berechnung.class wurde erzeugt!");
+
     }
 }
