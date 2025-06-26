@@ -14,4 +14,9 @@ public class TypedFieldDecl implements TypedMiniJava {
         this.name = name;
         this.type = type;
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

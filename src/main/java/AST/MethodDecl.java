@@ -1,7 +1,9 @@
 package AST;
 
+import TypedAST.TypedClasses.TypedLocalVarDecl;
 import TypedAST.TypedClasses.Visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record MethodDecl(String name,

@@ -51,4 +51,9 @@ public class TypedWhile implements TypedStatement, CodeGen {
         // End of loop
         context.visitLabel(endLabel);
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }

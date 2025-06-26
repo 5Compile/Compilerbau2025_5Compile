@@ -33,4 +33,9 @@ public class TypedBlock implements TypedMiniJava, CodeGen {
             }
         }
     }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
 }
