@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static AST.ASTGenerator.*;
+
 public class Parser {
 
     public static byte[] generateBytecodeFromFile(String pathToFile) throws IOException {
@@ -43,27 +45,29 @@ public class Parser {
     }
 
     public static ClassDecl generateAST(MiniJavaParser.ClassContext ctx) {
-        String className = ctx.IDENT().getText();
+        String className = ctx.name().IDENTIFIER().getText();
 
-        // Felder
         List<FieldDecl> fields = new ArrayList<>();
-        for (var fieldCtx : ctx.field()) {
-            fields.add(generateField(fieldCtx));
+        if (ctx.fieldDecl() != null) {
+            for (var fieldCtx : ctx.fieldDecl()) {
+                fields.add(generateFieldDecl(fieldCtx));
+            }
         }
 
-        // Methoden
         List<MethodDecl> methods = new ArrayList<>();
-        for (var methodCtx : ctx.method()) {
-            methods.add(generateMethod(methodCtx));
+        if (ctx.methodDecl() != null) {
+            for (var methodCtx : ctx.methodDecl()) {
+                methods.add(generateMethodDecl(methodCtx));
+            }
         }
 
-        // Main-Methode
         Optional<MainMethodDecl> mainMethod = Optional.empty();
-        if (ctx.main() != null) {
-            mainMethod = Optional.of(generateMain(ctx.main()));
+        if (ctx.mainmethodDecl() != null && !ctx.mainmethodDecl().isEmpty()) {
+            mainMethod = Optional.of(generateMainMethodDecl(ctx.mainmethodDecl(0)));
         }
 
         return new ClassDecl(className, fields, methods, mainMethod);
     }
+
 
 }
