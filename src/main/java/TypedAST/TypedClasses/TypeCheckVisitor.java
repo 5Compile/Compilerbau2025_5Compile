@@ -9,6 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
+    List<TypedLocalVarDecl> localVarDecls = new ArrayList<>();
+    List<TypedFieldDecl> fieldDecls = new ArrayList<>();
     TypeCheckVisitor TCVisitor;
     @Override
     public TypedAssign visit(Assign assign) {
@@ -28,7 +30,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         TypedExpression typedLeft = (TypedExpression) binary.left().accept(TCVisitor);
         TypedExpression typedRight = (TypedExpression) binary.right().accept(TCVisitor);
         BinaryOperator operator = binary.operator();
-        if (operator == BinaryOperator.PLUS || operator == BinaryOperator.MINUS || operator == BinaryOperator.TIMES) {
+        if (operator == BinaryOperator.PLUS || operator == BinaryOperator.MINUS || operator == BinaryOperator.TIMES || operator == BinaryOperator.MOD || operator == BinaryOperator.DIV) {
             if (typedLeft.getType() == Type.INT && typedRight.getType() == Type.INT) {
                 return new TypedBinary(typedLeft, typedRight, operator, typedLeft.getType());
             } else {
@@ -53,12 +55,6 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             } else {
                 throw new RuntimeException(typedLeft.getType() + "does not equal" + typedRight.getType() + "or does not work with operator" + operator);
             }
-        } else if (operator == BinaryOperator.MOD || operator == BinaryOperator.DIV ){
-            if (typedLeft.getType() == typedRight.getType() && typedRight.getType() == Type.INT) {
-                return new TypedBinary(typedLeft, typedRight, operator, typedRight.getType());
-            } else {
-                throw new RuntimeException(typedLeft.getType() + "does not equal" + typedRight.getType() + "or does not work with operator" + operator);
-            }
         }
         throw new RuntimeException("Unkown operator at binary operation");
     }
@@ -66,11 +62,25 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     @Override
     public TypedBlock visit(Block block) {
         Type posType = null;
+
         boolean gotReturn = false;
         List<TypedStatement> typedList = new ArrayList<>();
         for(Statement stmt : block.statements()){
             typedList.add((TypedStatement) stmt.accept(TCVisitor));
         }
+
+        for(TypedStatement typedStmt : typedList){
+            if (typedStmt instanceof TypedLocalVarDecl){
+                localVarDecls.add( (TypedLocalVarDecl) typedStmt);
+            }
+        }
+
+        for(TypedStatement typedStmt : typedList){
+            if (typedStmt instanceof TypedLocalVarDecl){
+                localVarDecls.add(((TypedLocalVarDecl) typedStmt));
+            }
+        }
+
         for(TypedStatement typedStmt : typedList){
             if (typedStmt instanceof TypedReturn){
                 if(gotReturn){
@@ -80,7 +90,8 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
                 posType = typedStmt.getType();
             }
         }
-        return new TypedBlock(typedList, posType);
+        localVarDecls = new ArrayList<>();
+        return new TypedBlock(typedList);
     }
 
     @Override
@@ -95,15 +106,14 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedClassDecl visit(ClassDecl classDecl) {
-        List<TypedFieldDecl> typedFields = new ArrayList<>();
         List<TypedMethodDecl> typedMethods = new ArrayList<>();
         for(FieldDecl fieldDecl : classDecl.fields()){
-            typedFields.add( (TypedFieldDecl) fieldDecl.accept(TCVisitor));
+            fieldDecls.add( (TypedFieldDecl) fieldDecl.accept(TCVisitor));
         }
-        for(TypedFieldDecl typedFieldDecl : typedFields){
-            for(TypedFieldDecl iteratedFieldDecl : typedFields){
+        for(TypedFieldDecl typedFieldDecl : fieldDecls){
+            for(TypedFieldDecl iteratedFieldDecl : fieldDecls){
                 if(typedFieldDecl != iteratedFieldDecl){
-                    if(Objects.equals(typedFieldDecl.name, iteratedFieldDecl.name)){
+                    if(Objects.equals(typedFieldDecl.getName(), iteratedFieldDecl.getName())){
                         throw  new RuntimeException("Two fields have been declared with the same name");
                     }
                 }
@@ -117,14 +127,14 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         for(TypedMethodDecl typedMethodDecl : typedMethods){
             for(TypedMethodDecl iteratedMethodDecl : typedMethods){
                 if(typedMethodDecl != iteratedMethodDecl){
-                    if(Objects.equals(typedMethodDecl.name, iteratedMethodDecl.name)){
-                        if(typedMethodDecl.parameters.size() == iteratedMethodDecl.parameters.size()){
-                            List<TypedParameter> remainParams = typedMethodDecl.parameters;
+                    if(Objects.equals(typedMethodDecl.getName(), iteratedMethodDecl.getName())){
+                        if(typedMethodDecl.getParameters().size() == iteratedMethodDecl.getParameters().size()){
+                            List<TypedParameter> remainParams = typedMethodDecl.getParameters();
                             for(TypedParameter remainParam : remainParams){
                                 boolean hasBeenRemoved = false;
-                                for(TypedParameter compareParameter : typedMethodDecl.parameters){
+                                for(TypedParameter compareParameter : typedMethodDecl.getParameters()){
                                     if(!hasBeenRemoved){
-                                        if(remainParam.type == compareParameter.type){
+                                        if(remainParam.getType() == compareParameter.getType()){
                                             remainParams.remove(remainParam);
                                             hasBeenRemoved = true;
                                         }
@@ -141,9 +151,9 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         }
         if (classDecl.mainMethod().isPresent()){
             Optional<TypedMainMethodDecl> typedMainMethodDecl = Optional.ofNullable( (TypedMainMethodDecl) classDecl.mainMethod().get().accept(TCVisitor));
-            return new TypedClassDecl(classDecl.name(), typedFields, typedMethods, typedMainMethodDecl); //TODO unsicher ob void passt
+            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, typedMainMethodDecl); //TODO unsicher ob void passt
         }else {
-            return new TypedClassDecl(classDecl.name(), typedFields, typedMethods, null); //TODO unsicher ob void passt
+            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, null); //TODO unsicher ob void passt
         }
     }
 
@@ -175,7 +185,6 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedInstVar visit(InstVar instVar) {
-        TypedExpression = instVar.target()
         return new TypedInstVar();
     }
 
@@ -186,11 +195,30 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedLocalOrFieldVar visit(LocalOrFieldVar localOrFieldVar) {
-        return new TypedLocalOrFieldVar();
+        boolean isLocal = false;
+        Type fittingType = null;
+        for(TypedLocalVarDecl localDecl : localVarDecls){
+            if(Objects.equals(localOrFieldVar.name(), localDecl.getName())){
+                isLocal = true;
+                fittingType = localDecl.getType();
+            }
+        }
+        if(!isLocal){
+            for(TypedFieldDecl fieldDecl : fieldDecls){
+                if(Objects.equals(localOrFieldVar.name(), fieldDecl.getName())){
+                    fittingType = fieldDecl.getType();
+                }
+            }
+        }
+        if(fittingType == null){
+            throw new RuntimeException("A variable has been used that is not declared");
+        }
+        return new TypedLocalOrFieldVar(localOrFieldVar.name(), isLocal, fittingType);
     }
 
     @Override
     public TypedLocalVarDecl visit(LocalVarDecl localVarDecl) {
+
         return new TypedLocalVarDecl();
     }
 
@@ -274,8 +302,8 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         for(TypedClassDecl typedClassDecl : typedClasses){
             for(TypedClassDecl compareClassDecl : typedClasses){
                 if(typedClassDecl != compareClassDecl){
-                    if(Objects.equals(typedClassDecl.name, compareClassDecl.name)){
-                        throw new RuntimeException("Classname " + typedClassDecl.name + " has been declared twice");
+                    if(Objects.equals(typedClassDecl.getName(), compareClassDecl.getName())){
+                        throw new RuntimeException("Classname " + typedClassDecl.getName() + " has been declared twice");
                     }
                 }
             }
@@ -285,7 +313,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedReturn visit(Return returnStmt) {
-        return new TypedReturn( (TypedExpression) returnStmt.value().accept(TCVisitor), ((TypedExpression) returnStmt.value().accept(TCVisitor)).getType());
+        return new TypedReturn();
     }
 
     @Override
