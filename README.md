@@ -2,21 +2,17 @@
 
 Ein Projekt im Rahmen der Vorlesung Compilerbau (SS 2025) an der DHBW Stuttgart.
 
-## 🔍 Ziel
+## Ziel
 
 Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge („MiniJava“) – inklusive Scanning, Parsing, semantischer Analyse und Bytecode-Erzeugung.
 
-## 📦 Technologien
+Dabei liegt der Fokus auf Lernzielen wie:
+- Sprachverarbeitung mit ANTLR
+- Compilerstruktur verstehen
+- Typprüfung & Codegenerierung
+- Testmethodik und Tooling
 
-- Java 21
-- IntelliJ IDEA
-- ANTLR (Parser-Generator)
-- ASM 9.8 (Bytecode-Generator)
-- Maven
-- GitHub
-- PlantUML (VS Code Plugin)
-
-## 👨‍💻 Team & Rollen
+## Team & Rollen
 
 | Name               | Rolle                          | E-Mail-Alias |
 |--------------------|--------------------------------|--------------|
@@ -26,41 +22,51 @@ Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge (
 | Sean Reich         | Scanning / Parsing / Grammatik | i23031@...   |
 | Bernhard Mebert    | Code-Erzeugung                 | i23022@...   |
 
+## Tech-Stack
 
-## 🧩 Projektstruktur
+- Java 21
+- IntelliJ IDEA
+- ANTLR (Parser-Generator)
+- ASM 9.8 (Bytecode-Generator)
+- Maven
+- Lombok
+- GitHub (Repo)
+- PlantUML (VS Code Plugin)
 
-- `src/main/antlr/`: ANTLR-Grammatikdateien (`*.g4`)
+## Projektstruktur
+
+- `src/main/antlr/`: ANTLR-Grammatik (`*.g4`)
 - `src/main/java/`: Hauptimplementierung
 - `src/test/java/`: Tests
 - `docs/`: UML, Dokumentation
 
-## 📅 Projektphasen
+##  Projektphasen
 
-1. **Initialisierung & ASTold**
-   - GitHub-Repo, Projektstruktur, erste Grammatik
-2. **Scanning / Parsing**
-   - ANTLR-Grammatik, Lexer & Parser, ASTold-Erzeugung
-3. **Semantische Analyse**
-   - Typprüfung, symbolische Kontextanalyse
-4. **Bytecode-Erzeugung**
-   - ASM-Integration, Codegenerierung
-5. **Integration & Testsuite**
-   - JUnit-Tests, Reflections, Fehlerbehandlung
-6. **Abschlusspräsentation**
-   - Vorstellung des Compilers anhand Test-Suite (27.06.2025)
+1. **Initialisierung**
 
-## 🔍 Projektziel
+   - GitHub-Repo aufsetzen, Projektstruktur anlegen
 
-Ein vollständiger Compiler für MiniJava, der aus einem Java-Subset korrekten Bytecode erzeugt. Dabei liegt der Fokus auf Lernzielen wie:
-- Sprachverarbeitung mit ANTLR
-- Compilerstruktur verstehen
-- Typprüfung & Codegenerierung
-- Testmethodik und Tooling
+2. **AST- und Schnittstellendefinition**
 
-## 📃 Einschränkungen MiniJava
+   - Gemeinsame Festlegung des abstrakten Syntaxbaums (AST) und der zentralen Interfaces
 
-- Keine Vererbung (immer `extends Object`)
-- Nur Standardkonstruktoren erlaubt
-- Keine Arrays, Threads, Exceptions, Lambda-Expressions
-- Nur `int`, `boolean`, `char` als primitive Typen
-- Keine Generics, Packages oder Imports
+3. **Erste vollständige Kompilierung**
+
+   - Ziel: Eine leere Klasse erfolgreich durch alle Phasen (Parse → Typisierung → Bytecode) bringen
+
+4. **Testgetriebene Feature-Entwicklung**
+
+   - Aufbau einer Testsuite, die schrittweise um Sprachfeatures erweitert wurde
+   - Entwickler konnten sich unabhängig an den Tests orientieren
+
+5. **Fehlerbehandlung**
+
+   - Prüfungen auf ungültige Eingaben und Fehlersammlung
+
+6. **Vorbereitung Präsentation**
+
+   - Spezielle Testfälle, vollständige Integration, Live-Demo-Vorbereitung
+
+7. **Abschlusspräsentation**
+
+   - Vorstellung des Compilers und der einzelnen Teilbereiche (27.06.2025)
