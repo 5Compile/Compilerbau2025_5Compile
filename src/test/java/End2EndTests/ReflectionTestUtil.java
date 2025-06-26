@@ -1,7 +1,5 @@
 package E2ETests;
 
-import de.maishai.Compiler;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

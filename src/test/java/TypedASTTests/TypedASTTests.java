@@ -1,10 +1,10 @@
-package java.TypedASTTests;
+package TypedASTTests;
 
 import TypedAST.TypedClasses.TypedProgram;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import java.ASTTests.Feature.*;
+import ASTTests.Feature.*;
 
 public class TypedASTTests {
 

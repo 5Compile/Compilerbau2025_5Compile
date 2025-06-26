@@ -1,8 +1,18 @@
-import AST.*;
+package AST;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import parser.MiniJavaParser;
+import parser.MiniJavaLexer;
+
 
 public class ASTGenerator {
 
@@ -51,6 +61,31 @@ public class ASTGenerator {
         }
 
         return new ClassDecl(className, fieldDecls, methodDecls, mainMethod);
+    }
+    public static Program generateASTFromFiles(List<String> sourcePaths) {
+        List<String> sources = new ArrayList<>();
+        for (String path : sourcePaths) {
+            try {
+                sources.add(Files.readString(Paths.get(path)));
+            } catch (IOException e) {
+                System.err.println("Fehler beim Lesen: " + path);
+                return null;
+            }
+        }
+        return generateAST(sources);
+    }
+
+    public static Program generateAST(List<String> sourceTexts) {
+        List<ClassDecl> classes = new ArrayList<>();
+        for (String input : sourceTexts) {
+            CharStream inputStream = CharStreams.fromString(input);
+            MiniJavaLexer lexer = new MiniJavaLexer(inputStream);
+            CommonTokenStream tokens = new CommonTokenStream(lexer);
+            MiniJavaParser parser = new MiniJavaParser(tokens);
+            MiniJavaParser.ClassContext ctx = parser.class_();
+            classes.add(ASTGenerator.generateAST(ctx));
+        }
+        return new Program(classes);
     }
 
     public static FieldDecl generateFieldDecl(MiniJavaParser.FieldDeclContext ctx) {

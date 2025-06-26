@@ -1,4 +1,7 @@
-// Generated from C:/Users/sean0/IdeaProjects/Compilerbau2025_5Compile/src/main/antlr/MiniJava.g4 by ANTLR 4.13.2
+// Generated from C:/Users/jonat/IdeaProjects/Compilerbau2025_5Compile_Parser/src/main/antlr/MiniJava.g4 by ANTLR 4.13.2
+
+package parser;
+
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**

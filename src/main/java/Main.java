@@ -1,7 +1,11 @@
+import AST.ASTGenerator;
 import AST.ClassDecl;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import parser.MiniJavaParser;
+import parser.MiniJavaLexer;
 
 import java.util.ArrayList;
 import java.util.List;

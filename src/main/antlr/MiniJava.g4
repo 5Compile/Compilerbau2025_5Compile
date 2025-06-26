@@ -1,5 +1,9 @@
 grammar MiniJava;
 
+@header {
+package parser;
+}
+
 class : PUBLIC 'class' name '{' (fieldDecl | methodDecl | mainmethodDecl | constructor)* '}';
 
 methodDecl : PUBLIC returntype name '(' parameters? ')' block;

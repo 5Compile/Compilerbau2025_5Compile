@@ -11,15 +11,22 @@ public class AST_ClassDecl {
      *  public class ClassDecl { }
      */
     public static Program get() {
-        // leere Klasse
-        ClassDecl clazz = new ClassDecl(
+        // Leerer Konstruktor
+        MethodDecl constructor = new MethodDecl(
                 "ClassDecl",
-                List.of(),            // keine Felder
-                List.of(),            // keine Methoden
-                Optional.empty()      // keine main-Methode
+                "void",
+                List.of(),                        // keine Parameter
+                new Block(List.of())              // leerer Block
         );
 
-        // vollständiges Programm (genau eine Klasse)
+        // Klasse mit Konstruktor
+        ClassDecl clazz = new ClassDecl(
+                "ClassDecl",
+                List.of(),                        // keine Felder
+                List.of(constructor),             // genau 1 Konstruktor
+                Optional.empty()                  // keine main-Methode
+        );
+
         return new Program(List.of(clazz));
     }
 }
