@@ -18,7 +18,7 @@ public class AST_MethodCall {
                 ))
         );
 
-        // Konstruktor: MethodCall() { } ← leerer Body, wie vom Parser geliefert
+        // Konstruktor: MethodCall() { } ← leerer Body, wie vom Utils.Parser geliefert
         MethodDecl constructor = new MethodDecl(
                 "MethodCall",
                 "void",

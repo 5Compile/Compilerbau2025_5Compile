@@ -86,6 +86,7 @@ public class ASTTests {
     @Test
     public void testExprLogic() {
         Program resultAst = ASTGenerator.generateASTFromFiles(List.of("src/test/testing_Files/ExprLogic.java"));
+        System.out.println(resultAst);
         assertEquals(AST_ExprLogic.get(), resultAst);
     }
 /*
@@ -106,6 +107,7 @@ public class ASTTests {
     @Test
     public void testMethodCall() {
         Program resultAst = ASTGenerator.generateASTFromFiles(List.of("src/test/testing_Files/MethodCall.java"));
+        System.out.println(resultAst);
         assertEquals(AST_MethodCall.get(), resultAst);
     }
 /*

@@ -3,6 +3,9 @@ package End2EndTests.Feature;
 import End2EndTests.ReflectionUtility;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 public class End2End_MethodTestClass {
     private ReflectionUtility util;
 

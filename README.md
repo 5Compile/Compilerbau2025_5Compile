@@ -10,7 +10,7 @@ Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge (
 
 - Java 21
 - IntelliJ IDEA
-- ANTLR (Parser-Generator)
+- ANTLR (Utils.Parser-Generator)
 - ASM 9.8 (Bytecode-Generator)
 - Maven
 - GitHub
@@ -39,7 +39,7 @@ Entwicklung eines vollständigen Compilers für eine reduzierte Java-Teilmenge (
 1. **Initialisierung & ASTold**
    - GitHub-Repo, Projektstruktur, erste Grammatik
 2. **Scanning / Parsing**
-   - ANTLR-Grammatik, Lexer & Parser, ASTold-Erzeugung
+   - ANTLR-Grammatik, Lexer & Utils.Parser, ASTold-Erzeugung
 3. **Semantische Analyse**
    - Typprüfung, symbolische Kontextanalyse
 4. **Bytecode-Erzeugung**

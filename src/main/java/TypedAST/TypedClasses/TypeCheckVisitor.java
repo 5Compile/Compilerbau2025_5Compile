@@ -175,7 +175,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedInstVar visit(InstVar instVar) {
-        TypedExpression = instVar.target()
+        TypedExpression = instVar.target();
         return new TypedInstVar();
     }
 

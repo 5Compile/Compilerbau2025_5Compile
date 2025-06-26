@@ -35,11 +35,11 @@ public class TypedAST_DataTypes {
                                         new TypedMethodDecl(
                                                 Type.INT,
                                                 "integer",
-                                                List.of(new Param(Type.INT, "a")),
+                                                List.of(new Parameter(Type.INT.toString(), "a")),
                                                 new TypedBlock(
                                                         new Block(List.of(
-                                                                new Assignment("a", new IntLiteral(1)),
-                                                                new Return(new TypedVarExpr("a", Type.INT))
+                                                                new Assign("a", new IntLiteral(1)),
+                                                                new Return(new TypedLocalVarDecl("a", Type.INT.toString()))
                                                         ))
                                                 ),
                                                 Type.INT
