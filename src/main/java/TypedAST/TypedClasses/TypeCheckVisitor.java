@@ -11,6 +11,9 @@ import java.util.Optional;
 public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     List<TypedLocalVarDecl> localVarDecls = new ArrayList<>();
     List<TypedFieldDecl> fieldDecls = new ArrayList<>();
+    List<TypedMethodDecl> declaredMethods = new ArrayList<>();
+    Type currentMethodType = null;
+    String currentMethodName = "";
     TypeCheckVisitor TCVisitor;
     @Override
     public TypedAssign visit(Assign assign) {
@@ -23,7 +26,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             throw new RuntimeException("The 2 Types used in an Assign are not Equal");
         }
         return new TypedAssign(typedTarget, typedValue, type);
-    }
+    } //done
 
     @Override
     public TypedBinary visit(Binary binary) {
@@ -57,11 +60,10 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             }
         }
         throw new RuntimeException("Unkown operator at binary operation");
-    }
+    } //done
 
     @Override
     public TypedBlock visit(Block block) {
-        Type posType = null;
 
         boolean gotReturn = false;
         List<TypedStatement> typedList = new ArrayList<>();
@@ -78,6 +80,10 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         for(TypedStatement typedStmt : typedList){
             if (typedStmt instanceof TypedLocalVarDecl){
                 localVarDecls.add(((TypedLocalVarDecl) typedStmt));
+            } else if(typedStmt instanceof TypedAssign) {
+                if(((TypedAssign) typedStmt).getTarget() instanceof TypedLocalVarDecl){
+                    localVarDecls.add(((TypedLocalVarDecl) ((TypedAssign) typedStmt).getTarget()));
+                }
             }
         }
 
@@ -87,22 +93,21 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
                     throw new RuntimeException("detected 2 return statements in one block");
                 }else
                     gotReturn = true;
-                posType = typedStmt.getType();
             }
         }
         localVarDecls = new ArrayList<>();
         return new TypedBlock(typedList);
-    }
+    } //maybe
 
     @Override
     public TypedBoolLiteral visit(BoolLiteral boolLiteral) {
         return new TypedBoolLiteral(boolLiteral.value());
-    }
+    } //done
 
     @Override
     public TypedCharLiteral visit(CharLiteral charLiteral) {
         return new TypedCharLiteral(charLiteral.value());
-    }
+    } //done
 
     @Override
     public TypedClassDecl visit(ClassDecl classDecl) {
@@ -123,7 +128,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             typedMethods.add( (TypedMethodDecl) methodDecl.accept(TCVisitor));
         }
 
-        //hier wird kontrolliert, ob es Klassen mit gleichem Namen und Signatur gibt
+        //hier wird kontrolliert, ob es Methoden mit gleichem Namen und Signatur gibt
         for(TypedMethodDecl typedMethodDecl : typedMethods){
             for(TypedMethodDecl iteratedMethodDecl : typedMethods){
                 if(typedMethodDecl != iteratedMethodDecl){
@@ -151,11 +156,11 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         }
         if (classDecl.mainMethod().isPresent()){
             Optional<TypedMainMethodDecl> typedMainMethodDecl = Optional.ofNullable( (TypedMainMethodDecl) classDecl.mainMethod().get().accept(TCVisitor));
-            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, typedMainMethodDecl); //TODO unsicher ob void passt
+            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, typedMainMethodDecl);
         }else {
-            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, null); //TODO unsicher ob void passt
+            return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, null);
         }
-    }
+    } //maybe
 
     @Override
     public TypedFieldDecl visit(FieldDecl fieldDecl) {
@@ -167,7 +172,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             default -> throw new RuntimeException("Error on defining Type of FieldDecl");
         };
         return new TypedFieldDecl(fieldDecl.name(), type);
-    }
+    } //done
 
     @Override
     public TypedIf visit(If ifStmt) {
@@ -181,17 +186,17 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         }else {
             return new TypedIf(typedCond, (TypedBlock) ifStmt.thenBranch().accept(TCVisitor), null);
         }
-    }
+    } //maybe
 
     @Override
     public TypedInstVar visit(InstVar instVar) {
         return new TypedInstVar();
-    }
+    } //(done)
 
     @Override
     public TypedIntLiteral visit(IntLiteral intLiteral) {
         return new TypedIntLiteral(intLiteral.value());
-    }
+    } //done
 
     @Override
     public TypedLocalOrFieldVar visit(LocalOrFieldVar localOrFieldVar) {
@@ -214,87 +219,119 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             throw new RuntimeException("A variable has been used that is not declared");
         }
         return new TypedLocalOrFieldVar(localOrFieldVar.name(), isLocal, fittingType);
-    }
+    } //done
 
     @Override
     public TypedLocalVarDecl visit(LocalVarDecl localVarDecl) {
-
-        return new TypedLocalVarDecl();
-    }
+        Type type = switch (localVarDecl.type()) {
+            case "int" -> Type.INT;
+            case "boolean" -> Type.BOOL;
+            case "char" -> Type.CHAR;
+            default -> throw new RuntimeException("Error on defining Type of Method return Type");
+        };
+        return new TypedLocalVarDecl(localVarDecl.name(), type);
+    } //done
 
     @Override
     public TypedMainMethodDecl visit(MainMethodDecl mainMethodDecl) {
-        return new TypedMainMethodDecl( (TypedBlock) mainMethodDecl.body().accept(TCVisitor));
-    }
+        currentMethodType = Type.VOID;
+        currentMethodName = "Main";
+        TypedBlock typedBlock = (TypedBlock) mainMethodDecl.body().accept(TCVisitor);
+        currentMethodType = null;
+        currentMethodName = "";
+        return new TypedMainMethodDecl(typedBlock);
+    } //maybe
 
     @Override
     public TypedMethodCall visit(MethodCall methodCall) {
-        return new TypedMethodCall();
-    }
+        List<TypedExpression> typedExpressions = new ArrayList<>();
+        TypedMethodDecl match = null;
+        for(TypedMethodDecl existingMethod : declaredMethods){
+            if(Objects.equals(existingMethod.getName(), methodCall.methodName())){
+                if(existingMethod.getParameters().size() == methodCall.arguments().size()){
+                    boolean foundMatch = true;
+                    for(int i = 0; i < existingMethod.getParameters().size(); i++){
+                        Type declaredType = existingMethod.getParameters().get(i).getType();
+                        Type actualType = methodCall.arguments().get(i).accept(TCVisitor).getType();
+
+                        if (!declaredType.equals(actualType)) {
+                            foundMatch = false;
+                            break;
+                        }
+                    }
+                    if(foundMatch){
+                        match = existingMethod;
+                        break;
+                    }
+                }
+
+            }
+        }
+        if(match == null){
+            throw new RuntimeException("Method " + methodCall.methodName() + " has never been declared");
+        }
+        for(Expression expression : methodCall.arguments()){
+            typedExpressions.add( (TypedExpression) expression.accept(TCVisitor));
+        }
+        return new TypedMethodCall( (TypedExpression) methodCall.target().accept(TCVisitor), methodCall.methodName(), typedExpressions, match.getType());
+    } //maybe
 
     @Override
     public TypedMethodDecl visit(MethodDecl methodDecl) {
+        TypedMethodDecl typedMethodDecl;
         List<TypedParameter> typedParameterList = new ArrayList<>();
-        Type type;
-        switch (methodDecl.returnType()) {
-            case "int":
-                type = Type.INT;
-                break;
-            case "boolean":
-                type = Type.BOOL;
-                break;
-            case "char":
-                type = Type.CHAR;
-                break;
-            default:
-                throw new RuntimeException("Error on defining Type of Method return Type");
-        }
+        Type type = switch (methodDecl.returnType()) {
+            case "int" -> Type.INT;
+            case "boolean" -> Type.BOOL;
+            case "char" -> Type.CHAR;
+            default -> throw new RuntimeException("Error on defining Type of Method return Type");
+        };
+        currentMethodType = type;
+        currentMethodName = methodDecl.name();
         for (Parameter parameter: methodDecl.parameters())
         {
             typedParameterList.add( (TypedParameter) parameter.accept(TCVisitor));
         }
-        return new TypedMethodDecl(methodDecl.name(), typedParameterList, (TypedBlock) methodDecl.body().accept(TCVisitor), type);
-    }
+        if(type != methodDecl.body().accept(TCVisitor).getType()){
+            throw new RuntimeException("Method " + methodDecl.name() +  " does not return the same type as its defined return");
+        }
+        typedMethodDecl = new TypedMethodDecl(methodDecl.name(), typedParameterList, (TypedBlock) methodDecl.body().accept(TCVisitor), type);
+        currentMethodType = null;
+        currentMethodName = "";
+        declaredMethods.add(typedMethodDecl);
+        return typedMethodDecl;
+    } //maybe
 
     @Override
     public TypedNew visit(New newStmt) {
-        return new TypedNew();
-    }
+        throw new RuntimeException("New can not be Used");
+    } //(done)
 
     @Override
     public TypedNullLiteral visit(NullLiteral nullLiteral) {
-        return new TypedNullLiteral();
-    }
+        return new TypedNullLiteral(Type.VOID);
+    } //done
 
     @Override
     public TypedParameter visit(Parameter parameter) {
-        Type paramType;
-        switch (parameter.name()){
-            case "int":
-                paramType = Type.INT;
-                break;
-            case "boolean":
-                paramType = Type.BOOL;
-                break;
-            case "char":
-                paramType = Type.CHAR;
-                break;
-            default:
-                throw new RuntimeException("Error on defining Type of Parameter");
-        }
+        Type paramType = switch (parameter.name()) {
+            case "int" -> Type.INT;
+            case "boolean" -> Type.BOOL;
+            case "char" -> Type.CHAR;
+            default -> throw new RuntimeException("Error on defining Type of Parameter");
+        };
         return new TypedParameter(parameter.name(), paramType);
-    }
+    } //done
 
     @Override
     public TypedPrintStmt visit(PrintStmt printStmt) {
         return new TypedPrintStmt( (TypedExpression) printStmt.expression().accept(TCVisitor));
-    }
+    } //done
 
     @Override
     public TypedProgram visit(Program program) {
         List<TypedClassDecl> typedClasses = new ArrayList<>();
         //check for double classes
-        program.classes();
         for (ClassDecl classDecl : program.classes())
         {
             typedClasses.add( (TypedClassDecl) classDecl.accept(TCVisitor));
@@ -309,12 +346,28 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             }
         }
         return new TypedProgram(typedClasses);
-    }
+    } //done
 
     @Override
     public TypedReturn visit(Return returnStmt) {
-        return new TypedReturn();
-    }
+        Type retType;
+        if(returnStmt.value() == null){
+            retType = Type.VOID;
+        }else{
+            retType = returnStmt.value().accept(TCVisitor).getType();
+        }
+        if(retType == currentMethodType){
+            if(retType == Type.VOID){
+                return new TypedReturn();
+            }else{
+                return new TypedReturn(Optional.of( (TypedExpression) returnStmt.value().accept(TCVisitor)), returnStmt.value().accept(TCVisitor).getType());
+            }
+        }
+        if (Objects.equals(currentMethodName, "Main")){
+            throw new RuntimeException("Main Method must return void");
+        }
+        throw new RuntimeException("Return Type " + retType + " does not equal return type " + currentMethodType + " of method " + currentMethodName);
+    } //done
 
     @Override
     public TypedUnary visit(Unary unary) {
@@ -332,10 +385,13 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             return new TypedUnary( (TypedExpression) unary.operand().accept(TCVisitor), unary.operator(), Type.BOOL);
         }
         throw new RuntimeException("Unknown unary operator");
-    }
+    } //done
 
     @Override
     public TypedWhile visit(While whileStmt) {
-        return new TypedWhile();
-    }
+        if(whileStmt.condition().accept(TCVisitor).getType() != Type.BOOL){
+            throw new RuntimeException("No boolean type in while loop");
+        }
+        return new TypedWhile( (TypedExpression) whileStmt.condition().accept(TCVisitor), (TypedBlock) whileStmt.body().accept(TCVisitor));
+    } //done
 }
