@@ -49,6 +49,7 @@ public class ASTGenerator {
                     new ArrayList<>(),
                     new Block(new ArrayList<>())
             );
+            methodDecls = new ArrayList<>(methodDecls);
             methodDecls.add(constructor);
         }
 

@@ -19,44 +19,18 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        String input1 = "public class ComplexExample {\n" +
+        String input1 = "public class MathUtils {\n" +
                 "\n" +
-                "    int counter;\n" +
-                "    boolean active;\n" +
-                "    char name;\n" +
-                "\n" +
-                "    public static void main(String[] args){\n" +
-                "        counter = 0;\n" +
-                "        active = true;\n" +
-                "        name = 'C';\n" +
+                "    public int square(int number) {\n" +
+                "        return number * number;\n" +
                 "    }\n" +
                 "\n" +
-                "    public int getCounter() {\n" +
-                "        return counter;\n" +
+                "    public int cube(int number) {\n" +
+                "        return number * number * number;\n" +
                 "    }\n" +
                 "\n" +
-                "    public void incrementCounter() {\n" +
-                "        counter++;\n" +
-                "    }\n" +
-                "\n" +
-                "    public boolean isActive() {\n" +
-                "        return active;\n" +
-                "    }\n" +
-                "\n" +
-                "    public void deactivate() {\n" +
-                "        active = false;\n" +
-                "    }\n" +
-                "\n" +
-                "    public char getName() {\n" +
-                "        return name;\n" +
-                "    }\n" +
-                "\n" +
-                "    public void updateName(char newName) {\n" +
-                "        name = newName;\n" +
-                "    }\n" +
-                "\n" +
-                "    public int calculateArea(int width, int height) {\n" +
-                "        return width * height;\n" +
+                "    public boolean isEven(int number) {\n" +
+                "        return number % 2 == 0;\n" +
                 "    }\n" +
                 "}";
 

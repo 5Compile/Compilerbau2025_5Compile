@@ -1,7 +1,10 @@
 public class ComplexExample {
 
-    int counter = 0;
-    boolean active = true;
+    int counter;
+    boolean active;
+    char x;
+
+    public static void main(String[] args){}
 
     public int getCounter() {
         return counter;
@@ -17,15 +20,6 @@ public class ComplexExample {
 
     public void deactivate() {
         active = false;
-    }
-
-
-    public void updateName(String newName) {
-        name = newName;
-    }
-
-    public double calculateArea(double width, double height) {
-        return width * height;
     }
 
 }
