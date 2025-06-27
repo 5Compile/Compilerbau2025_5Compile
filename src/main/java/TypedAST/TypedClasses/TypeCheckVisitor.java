@@ -14,7 +14,8 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     List<TypedMethodDecl> declaredMethods = new ArrayList<>();
     Type currentMethodType = null;
     String currentMethodName = "";
-    TypeCheckVisitor TCVisitor;
+    TypeCheckVisitor TCVisitor = new TypeCheckVisitor();
+
     @Override
     public TypedAssign visit(Assign assign) {
         TypedExpression typedTarget = (TypedExpression) assign.target().accept(TCVisitor);
