@@ -18,10 +18,14 @@ import java.util.Optional;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
-        String input1 = "public class Berechnung {}";
-
-
+        if (args.length == 0) {
+            System.err.println("Usage: java -jar 5compile.jar <source-file>");
+            System.exit(1);
+        }
+        
+        String sourceFile = args[0];
+        String input1 = Files.readString(Path.of(sourceFile));
+        
         List<ClassDecl> classes = new ArrayList<>();
         CharStream input = CharStreams.fromString(input1);
         MiniJavaLexer lexer = new MiniJavaLexer(input);
@@ -35,12 +39,17 @@ public class Main {
         TypedClassDecl typed = visitor.visit(decl);
         System.out.println("TypedAST erzeugt für: " + typed.getClass().getSimpleName());
 
-        typed.setName("Berechnung");
-        typed.setMainMethod(Optional.empty());
-
+        // Extract class name from AST or use default
+        String className = (typed.getName() != null) ? typed.getName() : "GeneratedClass";
+        
+        // Ensure mainMethod is initialized
+        if (typed.getMainMethod() == null) {
+            typed.setMainMethod(Optional.empty());
+        }
+        
         byte[] bytecode = typed.codeGen(); // erzeugt mit ASM
-        Files.write(Path.of("Berechnung.class"), bytecode);
-        System.out.println("✅ Berechnung.class wurde erzeugt!");
+        Files.write(Path.of(className + ".class"), bytecode);
+        System.out.println("✅ " + className + ".class wurde erzeugt!");
 
     }
 }

@@ -1,4 +1,4 @@
-// Generated from C:/Users/jonat/IdeaProjects/Compilerbau2025_5Compile_Parser/src/main/antlr/MiniJava.g4 by ANTLR 4.13.2
+// Generated from C:/Users/Bernhard/IdeaProjects/Compilerbau2025_5Compile/src/main/antlr/MiniJava.g4 by ANTLR 4.13.2
 
 package parser;
 

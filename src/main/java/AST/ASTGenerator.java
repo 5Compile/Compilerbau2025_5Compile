@@ -23,16 +23,16 @@ public class ASTGenerator {
 
         List<FieldDecl> fieldDecls = new ArrayList<>();
         if (ctx.fieldDecl() != null) {
-            fieldDecls = ctx.fieldDecl().stream()
+            fieldDecls.addAll(ctx.fieldDecl().stream()
                     .map(ASTGenerator::generateFieldDecl)
-                    .toList();
+                    .toList());
         }
 
         List<MethodDecl> methodDecls = new ArrayList<>();
         if (ctx.methodDecl() != null) {
-            methodDecls = ctx.methodDecl().stream()
+            methodDecls.addAll(ctx.methodDecl().stream()
                     .map(ASTGenerator::generateMethodDecl)
-                    .toList();
+                    .toList());
         }
 
         boolean hasConstructor = methodDecls.stream().anyMatch(m ->
