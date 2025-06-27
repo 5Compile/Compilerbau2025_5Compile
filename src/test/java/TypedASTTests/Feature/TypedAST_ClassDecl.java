@@ -1,10 +1,8 @@
-package TypedASTTests;
+package TypedASTTests.Feature;
 
-import AST.Block;
 import TypedAST.TypedClasses.TypedBlock;
 import TypedAST.TypedClasses.TypedClassDecl;
 import TypedAST.TypedClasses.TypedMainMethodDecl;
-import TypedAST.Type;
 import TypedAST.TypedClasses.TypedProgram;
 
 import java.util.List;
@@ -15,18 +13,16 @@ public class TypedAST_ClassDecl {
         return new TypedProgram(
                 List.of(
                         new TypedClassDecl(
-                                "ClassDecl",         // Klassenname
-                                List.of(),           // leere Felder
-                                List.of(),           // leere Methoden
+                                "ClassDecl",
+                                List.of(), // leere Felder
+                                List.of(), // leere Methoden
                                 Optional.of(
-                                        new TypedBlock(
-                                                new Block(
-                                                        List.of()
+                                        new TypedMainMethodDecl(
+                                                new TypedBlock(
+                                                        List.of() // leere Statements
                                                 )
                                         )
-
-                                ),
-                                Type.REFERENCE("ClassDecl")
+                                )
                         )
                 )
         );

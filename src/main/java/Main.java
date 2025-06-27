@@ -19,7 +19,46 @@ import java.util.Optional;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        String input1 = "public class Berechnung {}";
+        String input1 = "public class ComplexExample {\n" +
+                "\n" +
+                "    int counter;\n" +
+                "    boolean active;\n" +
+                "    char name;\n" +
+                "\n" +
+                "    public static void main(String[] args){\n" +
+                "        counter = 0;\n" +
+                "        active = true;\n" +
+                "        name = 'C';\n" +
+                "    }\n" +
+                "\n" +
+                "    public int getCounter() {\n" +
+                "        return counter;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void incrementCounter() {\n" +
+                "        counter++;\n" +
+                "    }\n" +
+                "\n" +
+                "    public boolean isActive() {\n" +
+                "        return active;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void deactivate() {\n" +
+                "        active = false;\n" +
+                "    }\n" +
+                "\n" +
+                "    public char getName() {\n" +
+                "        return name;\n" +
+                "    }\n" +
+                "\n" +
+                "    public void updateName(char newName) {\n" +
+                "        name = newName;\n" +
+                "    }\n" +
+                "\n" +
+                "    public int calculateArea(int width, int height) {\n" +
+                "        return width * height;\n" +
+                "    }\n" +
+                "}";
 
 
         List<ClassDecl> classes = new ArrayList<>();

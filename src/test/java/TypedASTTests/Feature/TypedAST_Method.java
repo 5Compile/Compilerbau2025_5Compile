@@ -1,4 +1,4 @@
-package TypedASTTests;
+package TypedASTTests.Feature;
 
 import AST.Block;
 import AST.ClassDecl;
@@ -8,30 +8,27 @@ import TypedAST.TypedClasses.*;
 
 import java.util.List;
 import java.util.Optional;
-
 public class TypedAST_Method {
     public static TypedProgram get() {
         return new TypedProgram(
                 List.of(
                         new TypedClassDecl(
-                                "Method",              // Klassenname
-                                List.of(),            // keine Felder
+                                "Method",
+                                List.of(),
                                 List.of(
                                         new TypedMethodDecl(
-                                                new MethodDecl(
-                                                        "void",
-                                                        "method",
-                                                        List.of(),
-                                                        new Block(List.of())
-                                                )
+                                                "void",
+                                                "method",
+                                                List.of(),
+                                                new Block(List.of()),
+                                                Type.VOID
                                         )
-                                )
-                                ,
-                                Optional.empty(),     // keine Main-Methode
-                                Type.REFERENCE("Method") // eigener Klassentyp
+                                ),
+                                Optional.empty(),
+                                Type.REFERENCE("Method")
                         )
                 ),
-                null // z.B. globale Funktionen, falls du die verwendest
+                null
         );
     }
 }

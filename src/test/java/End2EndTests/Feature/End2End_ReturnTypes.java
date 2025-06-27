@@ -3,6 +3,8 @@ package End2EndTests.Feature;
 import End2EndTests.ReflectionUtility;
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class End2End_ReturnTypes {
     private ReflectionUtility util;
 

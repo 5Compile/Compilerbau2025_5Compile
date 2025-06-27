@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Utils.Parser;
+
+import static javax.swing.UIManager.get;
 
 
 // DIESE KOMPLETTE KLASSE ÜBERSETZT TESTKLASSEN IN BYTECODE UND LÄDT SIE MIT EINEM CLASSLOADER IN DIE LAUFZEIT
@@ -23,7 +26,7 @@ public class ReflectionUtility {
 
     public ReflectionUtility(String sourceFilePath, String className) throws Exception {
         // Generate bytecode from source file
-        byte[] resultBytecode = Compiler.generateByteCodeArrayFromFiles(List.of(sourceFilePath)).get(0);
+        byte[] resultBytecode = Parser.generateBytecodeFromFile(sourceFilePath);
 
         // Custom class loader to load the class
         ClassLoader classLoader = new ClassLoader() {
@@ -184,4 +187,8 @@ public class ReflectionUtility {
             return null;
         }
     }
+    public Class<?> getCompiledClass() {
+        return clazz; // oder wie auch immer dein geladenes Class-Objekt heißt
+    }
+
 }
