@@ -1,6 +1,8 @@
 package TypedASTTests;
 
 import TypedAST.TypedClasses.TypedProgram;
+import TypedASTTests.Feature.TypedAST_ClassDecl;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

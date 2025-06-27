@@ -1,4 +1,4 @@
-package TypedASTTests;
+package TypedASTTests.Feature;
 
 import AST.Block;
 import AST.ClassDecl;
