@@ -19,7 +19,7 @@ public class TypedAST_ExprLogic {
         TypedMethodDecl test5 = new TypedMethodDecl("test5", List.of(), createBoolLogicBlock(BinaryOperator.OR), Type.BOOL);
         TypedMethodDecl test6 = new TypedMethodDecl("test6", List.of(), createBoolLogicBlock(BinaryOperator.AND), Type.BOOL);
 
-        TypedMethodDecl constructor = new TypedMethodDecl("ExprLogic", List.of(), new TypedBlock(List.of(), Type.VOID), Type.VOID);
+        TypedMethodDecl constructor = new TypedMethodDecl("ExprLogic", List.of(), new TypedBlock(List.of()), Type.VOID);
 
         TypedClassDecl clazz = new TypedClassDecl("ExprLogic", List.of(),
                 List.of(test1, test2, test3, test4, test5, test6, constructor),

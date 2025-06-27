@@ -2,9 +2,6 @@ package TypedASTTests.Feature;
 
 import TypedAST.Type;
 import TypedAST.TypedClasses.*;
-import TypedAST.TypedExpressions.*;
-import TypedAST.TypedLiterals.*;
-import TypedAST.TypedStatements.*;
 
 import java.util.List;
 import java.util.Optional;

@@ -3,6 +3,7 @@ package Utils;
 import AST.*;
 import TypedAST.TypedClasses.TypeCheckVisitor;
 import TypedAST.TypedClasses.TypedClassDecl;
+import TypedAST.TypedClasses.TypedProgram;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -68,6 +69,22 @@ public class Parser {
 
         return new ClassDecl(className, fields, methods, mainMethod);
     }
+
+    public static TypedProgram generateTypedASTFromAst(Program ast) {
+        TypeCheckVisitor typeCheckVisitor = new TypeCheckVisitor();
+        List<TypedClassDecl> typedClasses = new ArrayList<>();
+
+        // Jeder Klassenknoten des AST wird besucht und in einen TypedAST-Knoten konvertiert
+        for (ClassDecl classDecl : ast.classes()) {
+            TypedClassDecl typedClass = typeCheckVisitor.visit(classDecl);
+            typedClasses.add(typedClass);
+        }
+
+        // Ein neues TypedProgram mit den generierten TypedClassDecl-Knoten zurückgeben
+        return new TypedProgram(typedClasses);
+    }
+
+
 
 
 }
