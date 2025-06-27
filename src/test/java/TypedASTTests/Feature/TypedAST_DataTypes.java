@@ -39,30 +39,30 @@ public class TypedAST_DataTypes {
                                                 new TypedBlock(
                                                         new Block(List.of(
                                                                 new Assign("a", new IntLiteral(1)),
-                                                                new Return(new TypedLocalVarDecl("a", Type.INT.toString()))
+                                                                new Return(new TypedLocalOrFieldVar("a", Type.INT))
                                                         ))
                                                 ),
                                                 Type.INT
                                         ),
                                         new TypedMethodDecl(
-                                                Type.BOOLEAN,
+                                                Type.BOOL,
                                                 "bool",
-                                                List.of(new Param(Type.BOOLEAN, "b")),
+                                                List.of(new Parameter(Type.BOOL.toString(), "b")),
                                                 new TypedBlock(
                                                         new Block(List.of(
-                                                                new Assignment("b", new BoolLiteral(true)),
-                                                                new Return(new TypedVarExpr("b", Type.BOOLEAN))
+                                                                new Assign("b", new BoolLiteral(true)),
+                                                                new Return(new TypedVarExpr("b", Type.BOOL))
                                                         ))
                                                 ),
-                                                Type.BOOLEAN
+                                                Type.BOOL
                                         ),
                                         new TypedMethodDecl(
                                                 Type.CHAR,
                                                 "character",
-                                                List.of(new Param(Type.CHAR, "c")),
+                                                List.of(new Parameter(Type.CHAR.toString(), "c")),
                                                 new TypedBlock(
                                                         new Block(List.of(
-                                                                new Assignment("c", new CharLiteral('c')),
+                                                                new Assign("c", new CharLiteral('c')),
                                                                 new Return(new TypedVarExpr("c", Type.CHAR))
                                                         ))
                                                 ),

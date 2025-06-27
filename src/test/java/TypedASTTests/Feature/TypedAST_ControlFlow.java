@@ -23,7 +23,7 @@ public class TypedAST_ControlFlow {
                                 // Constructor
                                 new MethodDecl(
                                         "ControlFlow",
-                                        Types.VOID,
+                                        Type.VOID.toString(),
                                         List.of(),
                                         new Block(List.of(
                                                 new Assign(
@@ -36,15 +36,14 @@ public class TypedAST_ControlFlow {
                                 // loopIt()
                                 new MethodDecl(
                                         "loopIt",
-                                        Type.VOID,
+                                        Type.VOID.toString(),
                                         List.of(),
                                         new Block(List.of(
                                                 new While(
                                                         new Binary(
                                                                 new LocalOrFieldVar("counter"),
                                                                 new IntLiteral(5),
-                                                                BinaryOperator.LT,
-                                                                Type.BOOL
+                                                                BinaryOperator.LT
                                                         ),
                                                         new Block(List.of(
                                                                 new Assign(
@@ -52,38 +51,34 @@ public class TypedAST_ControlFlow {
                                                                         new Binary(
                                                                                 new LocalOrFieldVar("counter"),
                                                                                 new IntLiteral(1),
-                                                                                BinaryOperator.PLUS,
-                                                                                Type.INT
+                                                                                BinaryOperator.PLUS
                                                                         )
                                                                 )
                                                         ))
                                                 ),
                                                 new If(
                                                         new Binary(
-                                                                new LocalOrFieldVar("counter", Types.INT),
+                                                                new LocalOrFieldVar("counter"),
                                                                 new IntLiteral(5),
-                                                                BinaryOperator.EQ,
-                                                                Types.BOOL
+                                                                BinaryOperator.EQ
                                                         ),
                                                         new Block(List.of(
                                                                 new Assign(
-                                                                        new LocalOrFieldVar("counter", Types.INT),
+                                                                        new LocalOrFieldVar("counter"),
                                                                         new Binary(
-                                                                                new LocalOrFieldVar("counter", Types.INT),
+                                                                                new LocalOrFieldVar("counter"),
                                                                                 new IntLiteral(1),
-                                                                                BinaryOperator.PLUS,
-                                                                                Types.INT
+                                                                                BinaryOperator.PLUS
                                                                         )
                                                                 )
                                                         )),
                                                         Optional.of(new Block(List.of(
                                                                 new Assign(
-                                                                        new LocalOrFieldVar("counter", Types.INT),
+                                                                        new LocalOrFieldVar("counter"),
                                                                         new Binary(
-                                                                                new LocalOrFieldVar("counter", Types.INT),
+                                                                                new LocalOrFieldVar("counter"),
                                                                                 new IntLiteral(1),
-                                                                                BinaryOperator.MINUS,
-                                                                                Types.INT
+                                                                                BinaryOperator.MINUS
                                                                         )
                                                                 )
                                                         )))
@@ -97,11 +92,11 @@ public class TypedAST_ControlFlow {
                                 new Block(List.of(
                                         new LocalVarDecl("ControlFlow", "c"),
                                         new Assign(
-                                                new LocalOrFieldVar("c", new ClassType("ControlFlow")),
+                                                new LocalOrFieldVar("c"),
                                                 new New("ControlFlow", List.of())
                                         ),
                                         new MethodCall(
-                                                new LocalOrFieldVar("c", new ClassType("ControlFlow")),
+                                                new LocalOrFieldVar("c"),
                                                 "loopIt",
                                                 List.of()
                                         )
