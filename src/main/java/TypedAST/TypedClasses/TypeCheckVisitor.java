@@ -284,6 +284,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             case "int" -> Type.INT;
             case "boolean" -> Type.BOOL;
             case "char" -> Type.CHAR;
+            case "void" -> Type.VOID;
             default -> throw new RuntimeException("Error on defining Type of Method return Type");
         };
         currentMethodType = type;
