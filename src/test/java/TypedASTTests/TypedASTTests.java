@@ -1,15 +1,12 @@
 package TypedASTTests;
 
 import TypedAST.TypedClasses.TypedProgram;
-import TypedASTTests.Feature.TypedAST_ClassDecl;
 
 import ASTTests.Feature.*;
-import TypedASTTests.Feature.TypedAST_Comment;
 import Utils.Parser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import ASTTests.Feature.*;
 
 public class TypedASTTests {
 

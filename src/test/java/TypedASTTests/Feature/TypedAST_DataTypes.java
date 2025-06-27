@@ -38,7 +38,7 @@ public class TypedAST_DataTypes {
                                                 List.of(new Parameter(Type.INT.toString(), "a")),
                                                 new TypedBlock(
                                                         new Block(List.of(
-                                                                new Assign("a", new IntLiteral(1)),
+                                                                new Assign(new LocalOrFieldVar("a"), new IntLiteral(1))
                                                                 new Return(new TypedLocalOrFieldVar("a", Type.INT))
                                                         ))
                                                 ),
@@ -51,7 +51,7 @@ public class TypedAST_DataTypes {
                                                 new TypedBlock(
                                                         new Block(List.of(
                                                                 new Assign("b", new BoolLiteral(true)),
-                                                                new Return(new TypedVarExpr("b", Type.BOOL))
+                                                                new Return(new TypedLocalOrFieldVar("b", Type.BOOL))
                                                         ))
                                                 ),
                                                 Type.BOOL
@@ -63,7 +63,7 @@ public class TypedAST_DataTypes {
                                                 new TypedBlock(
                                                         new Block(List.of(
                                                                 new Assign("c", new CharLiteral('c')),
-                                                                new Return(new TypedVarExpr("c", Type.CHAR))
+                                                                new Return(new TypedLocalOrFieldVar("c", Type.CHAR))
                                                         ))
                                                 ),
                                                 Type.CHAR

@@ -2,7 +2,6 @@ public class ComplexExample {
 
     int counter = 0;
     boolean active = true;
-    String name = "Compiler";
 
     public int getCounter() {
         return counter;
@@ -20,9 +19,6 @@ public class ComplexExample {
         active = false;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public void updateName(String newName) {
         name = newName;
@@ -32,7 +28,4 @@ public class ComplexExample {
         return width * height;
     }
 
-    public String summarize() {
-        return name + " [" + counter + "]";
-    }
 }
