@@ -64,25 +64,18 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedBlock visit(Block block) {
-
+        List<TypedLocalVarDecl> blockVarDecls = new ArrayList<>();
         boolean gotReturn = false;
         List<TypedStatement> typedList = new ArrayList<>();
         for(Statement stmt : block.statements()){
-            typedList.add((TypedStatement) stmt.accept(this));
-        }
-
-        for(TypedStatement typedStmt : typedList){
-            if (typedStmt instanceof TypedLocalVarDecl){
-                localVarDecls.add( (TypedLocalVarDecl) typedStmt);
-            }
-        }
-
-        for(TypedStatement typedStmt : typedList){
-            if (typedStmt instanceof TypedLocalVarDecl){
-                localVarDecls.add(((TypedLocalVarDecl) typedStmt));
-            } else if(typedStmt instanceof TypedAssign) {
-                if(((TypedAssign) typedStmt).getTarget() instanceof TypedLocalVarDecl){
-                    localVarDecls.add(((TypedLocalVarDecl) ((TypedAssign) typedStmt).getTarget()));
+            TypedStatement foundStmt = (TypedStatement) stmt.accept(this);
+            typedList.add((foundStmt));
+            if (foundStmt instanceof TypedLocalVarDecl){
+                localVarDecls.add(((TypedLocalVarDecl) foundStmt));
+                blockVarDecls.add( (TypedLocalVarDecl) foundStmt);
+            } else if(foundStmt instanceof TypedAssign) {
+                if(((TypedAssign) foundStmt).getTarget() instanceof TypedLocalVarDecl){
+                    localVarDecls.add(((TypedLocalVarDecl) ((TypedAssign) foundStmt).getTarget()));
                 }
             }
         }
@@ -95,7 +88,16 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
                     gotReturn = true;
             }
         }
-        localVarDecls = new ArrayList<>();
+        List<TypedLocalVarDecl> newLocalVarDecls = new ArrayList<>();
+        newLocalVarDecls.addAll(localVarDecls);
+        for(TypedLocalVarDecl typedLocalVar : localVarDecls){
+            for(TypedLocalVarDecl typedBlockVar : blockVarDecls){
+                if(typedLocalVar == typedBlockVar){
+                    newLocalVarDecls.remove(typedLocalVar);
+                }
+            }
+        }
+        localVarDecls = newLocalVarDecls;
         return new TypedBlock(typedList);
     } //maybe
 
@@ -292,14 +294,13 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         for (Parameter parameter: methodDecl.parameters())
         {
             typedParameterList.add( (TypedParameter) parameter.accept(this));
-        }
-        if(type != methodDecl.body().accept(this).getType()){
-            throw new RuntimeException("Method " + methodDecl.name() +  " does not return the same type as its defined return");
+            localVarDecls.add(new TypedLocalVarDecl(parameter.name(), parameter.accept(this).getType()));
         }
         typedMethodDecl = new TypedMethodDecl(methodDecl.name(), typedParameterList, (TypedBlock) methodDecl.body().accept(this), type);
         currentMethodType = null;
         currentMethodName = "";
         declaredMethods.add(typedMethodDecl);
+        localVarDecls = new ArrayList<>();
         return typedMethodDecl;
     } //maybe
 
@@ -315,7 +316,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedParameter visit(Parameter parameter) {
-        Type paramType = switch (parameter.name()) {
+        Type paramType = switch (parameter.type()) {
             case "int" -> Type.INT;
             case "boolean" -> Type.BOOL;
             case "char" -> Type.CHAR;
