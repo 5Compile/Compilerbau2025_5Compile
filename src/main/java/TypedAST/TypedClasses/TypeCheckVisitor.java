@@ -14,12 +14,11 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     List<TypedMethodDecl> declaredMethods = new ArrayList<>();
     Type currentMethodType = null;
     String currentMethodName = "";
-    TypeCheckVisitor TCVisitor = new TypeCheckVisitor();
 
     @Override
     public TypedAssign visit(Assign assign) {
-        TypedExpression typedTarget = (TypedExpression) assign.target().accept(TCVisitor);
-        TypedExpression typedValue = (TypedExpression) assign.value().accept(TCVisitor);
+        TypedExpression typedTarget = (TypedExpression) assign.target().accept(this);
+        TypedExpression typedValue = (TypedExpression) assign.value().accept(this);
         Type type;
         if(typedTarget.getType() == typedValue.getType() && typedTarget.getType() != null){
             type = typedTarget.getType();
@@ -31,8 +30,8 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedBinary visit(Binary binary) {
-        TypedExpression typedLeft = (TypedExpression) binary.left().accept(TCVisitor);
-        TypedExpression typedRight = (TypedExpression) binary.right().accept(TCVisitor);
+        TypedExpression typedLeft = (TypedExpression) binary.left().accept(this);
+        TypedExpression typedRight = (TypedExpression) binary.right().accept(this);
         BinaryOperator operator = binary.operator();
         if (operator == BinaryOperator.PLUS || operator == BinaryOperator.MINUS || operator == BinaryOperator.TIMES || operator == BinaryOperator.MOD || operator == BinaryOperator.DIV) {
             if (typedLeft.getType() == Type.INT && typedRight.getType() == Type.INT) {
@@ -69,7 +68,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         boolean gotReturn = false;
         List<TypedStatement> typedList = new ArrayList<>();
         for(Statement stmt : block.statements()){
-            typedList.add((TypedStatement) stmt.accept(TCVisitor));
+            typedList.add((TypedStatement) stmt.accept(this));
         }
 
         for(TypedStatement typedStmt : typedList){
@@ -114,7 +113,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     public TypedClassDecl visit(ClassDecl classDecl) {
         List<TypedMethodDecl> typedMethods = new ArrayList<>();
         for(FieldDecl fieldDecl : classDecl.fields()){
-            fieldDecls.add( (TypedFieldDecl) fieldDecl.accept(TCVisitor));
+            fieldDecls.add( (TypedFieldDecl) fieldDecl.accept(this));
         }
         for(TypedFieldDecl typedFieldDecl : fieldDecls){
             for(TypedFieldDecl iteratedFieldDecl : fieldDecls){
@@ -126,7 +125,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             }
         }
         for(MethodDecl methodDecl : classDecl.methods()){
-            typedMethods.add( (TypedMethodDecl) methodDecl.accept(TCVisitor));
+            typedMethods.add( (TypedMethodDecl) methodDecl.accept(this));
         }
 
         //hier wird kontrolliert, ob es Methoden mit gleichem Namen und Signatur gibt
@@ -156,7 +155,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             }
         }
         if (classDecl.mainMethod().isPresent()){
-            Optional<TypedMainMethodDecl> typedMainMethodDecl = Optional.ofNullable( (TypedMainMethodDecl) classDecl.mainMethod().get().accept(TCVisitor));
+            Optional<TypedMainMethodDecl> typedMainMethodDecl = Optional.ofNullable( (TypedMainMethodDecl) classDecl.mainMethod().get().accept(this));
             return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, typedMainMethodDecl);
         }else {
             return new TypedClassDecl(classDecl.name(), fieldDecls, typedMethods, null);
@@ -177,15 +176,15 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedIf visit(If ifStmt) {
-        TypedExpression typedCond = (TypedExpression) ifStmt.condition().accept(TCVisitor);
+        TypedExpression typedCond = (TypedExpression) ifStmt.condition().accept(this);
         if(typedCond.getType() != Type.BOOL){
             throw new RuntimeException("No boolean in if stmt detected");
         }
         if (ifStmt.elseBranch().isPresent()){
-            Optional<TypedBlock> typedElseBlock = Optional.ofNullable( (TypedBlock) ifStmt.elseBranch().get().accept(TCVisitor));
-            return new TypedIf(typedCond, (TypedBlock) ifStmt.thenBranch().accept(TCVisitor), typedElseBlock);
+            Optional<TypedBlock> typedElseBlock = Optional.ofNullable( (TypedBlock) ifStmt.elseBranch().get().accept(this));
+            return new TypedIf(typedCond, (TypedBlock) ifStmt.thenBranch().accept(this), typedElseBlock);
         }else {
-            return new TypedIf(typedCond, (TypedBlock) ifStmt.thenBranch().accept(TCVisitor), null);
+            return new TypedIf(typedCond, (TypedBlock) ifStmt.thenBranch().accept(this), null);
         }
     } //maybe
 
@@ -237,7 +236,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     public TypedMainMethodDecl visit(MainMethodDecl mainMethodDecl) {
         currentMethodType = Type.VOID;
         currentMethodName = "Main";
-        TypedBlock typedBlock = (TypedBlock) mainMethodDecl.body().accept(TCVisitor);
+        TypedBlock typedBlock = (TypedBlock) mainMethodDecl.body().accept(this);
         currentMethodType = null;
         currentMethodName = "";
         return new TypedMainMethodDecl(typedBlock);
@@ -253,7 +252,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
                     boolean foundMatch = true;
                     for(int i = 0; i < existingMethod.getParameters().size(); i++){
                         Type declaredType = existingMethod.getParameters().get(i).getType();
-                        Type actualType = methodCall.arguments().get(i).accept(TCVisitor).getType();
+                        Type actualType = methodCall.arguments().get(i).accept(this).getType();
 
                         if (!declaredType.equals(actualType)) {
                             foundMatch = false;
@@ -272,9 +271,9 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
             throw new RuntimeException("Method " + methodCall.methodName() + " has never been declared");
         }
         for(Expression expression : methodCall.arguments()){
-            typedExpressions.add( (TypedExpression) expression.accept(TCVisitor));
+            typedExpressions.add( (TypedExpression) expression.accept(this));
         }
-        return new TypedMethodCall( (TypedExpression) methodCall.target().accept(TCVisitor), methodCall.methodName(), typedExpressions, match.getType());
+        return new TypedMethodCall( (TypedExpression) methodCall.target().accept(this), methodCall.methodName(), typedExpressions, match.getType());
     } //maybe
 
     @Override
@@ -291,12 +290,12 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         currentMethodName = methodDecl.name();
         for (Parameter parameter: methodDecl.parameters())
         {
-            typedParameterList.add( (TypedParameter) parameter.accept(TCVisitor));
+            typedParameterList.add( (TypedParameter) parameter.accept(this));
         }
-        if(type != methodDecl.body().accept(TCVisitor).getType()){
+        if(type != methodDecl.body().accept(this).getType()){
             throw new RuntimeException("Method " + methodDecl.name() +  " does not return the same type as its defined return");
         }
-        typedMethodDecl = new TypedMethodDecl(methodDecl.name(), typedParameterList, (TypedBlock) methodDecl.body().accept(TCVisitor), type);
+        typedMethodDecl = new TypedMethodDecl(methodDecl.name(), typedParameterList, (TypedBlock) methodDecl.body().accept(this), type);
         currentMethodType = null;
         currentMethodName = "";
         declaredMethods.add(typedMethodDecl);
@@ -326,7 +325,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
 
     @Override
     public TypedPrintStmt visit(PrintStmt printStmt) {
-        return new TypedPrintStmt( (TypedExpression) printStmt.expression().accept(TCVisitor));
+        return new TypedPrintStmt( (TypedExpression) printStmt.expression().accept(this));
     } //done
 
     @Override
@@ -335,7 +334,7 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         //check for double classes
         for (ClassDecl classDecl : program.classes())
         {
-            typedClasses.add( (TypedClassDecl) classDecl.accept(TCVisitor));
+            typedClasses.add( (TypedClassDecl) classDecl.accept(this));
         }
         for(TypedClassDecl typedClassDecl : typedClasses){
             for(TypedClassDecl compareClassDecl : typedClasses){
@@ -355,13 +354,13 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
         if(returnStmt.value() == null){
             retType = Type.VOID;
         }else{
-            retType = returnStmt.value().accept(TCVisitor).getType();
+            retType = returnStmt.value().accept(this).getType();
         }
         if(retType == currentMethodType){
             if(retType == Type.VOID){
                 return new TypedReturn();
             }else{
-                return new TypedReturn(Optional.of( (TypedExpression) returnStmt.value().accept(TCVisitor)), returnStmt.value().accept(TCVisitor).getType());
+                return new TypedReturn(Optional.of( (TypedExpression) returnStmt.value().accept(this)), returnStmt.value().accept(this).getType());
             }
         }
         if (Objects.equals(currentMethodName, "Main")){
@@ -373,26 +372,26 @@ public class TypeCheckVisitor implements Visitor<TypedMiniJava> {
     @Override
     public TypedUnary visit(Unary unary) {
         if (unary.operator() == UnaryOperator.NOT) {
-            if (unary.operand().accept(TCVisitor).getType() != Type.BOOL) {
+            if (unary.operand().accept(this).getType() != Type.BOOL) {
                 throw new RuntimeException(unary.operator() + "does not fit with" + unary.operand());
             }
-            return new TypedUnary( (TypedExpression) unary.operand().accept(TCVisitor), unary.operator(), Type.BOOL);
+            return new TypedUnary( (TypedExpression) unary.operand().accept(this), unary.operator(), Type.BOOL);
         }
 
         if (unary.operator() == UnaryOperator.NEG) {
-            if (unary.operand().accept(TCVisitor).getType() != Type.INT) {
+            if (unary.operand().accept(this).getType() != Type.INT) {
                 throw new RuntimeException(unary.operator() + "does not fit with" + unary.operand());
             }
-            return new TypedUnary( (TypedExpression) unary.operand().accept(TCVisitor), unary.operator(), Type.BOOL);
+            return new TypedUnary( (TypedExpression) unary.operand().accept(this), unary.operator(), Type.BOOL);
         }
         throw new RuntimeException("Unknown unary operator");
     } //done
 
     @Override
     public TypedWhile visit(While whileStmt) {
-        if(whileStmt.condition().accept(TCVisitor).getType() != Type.BOOL){
+        if(whileStmt.condition().accept(this).getType() != Type.BOOL){
             throw new RuntimeException("No boolean type in while loop");
         }
-        return new TypedWhile( (TypedExpression) whileStmt.condition().accept(TCVisitor), (TypedBlock) whileStmt.body().accept(TCVisitor));
+        return new TypedWhile( (TypedExpression) whileStmt.condition().accept(this), (TypedBlock) whileStmt.body().accept(this));
     } //done
 }
